@@ -35,11 +35,11 @@ const trainApi = async (
   callback(shedule);
 };
 
-function parsingData(result) {
+parsingData = (result) => {
   return result.data.response.body.items.item;
-}
+};
 
-function getCityCode(regionName) {
+getCityCode = (regionName) => {
   var data = fs.readFileSync("./cityList.json", "utf8");
   var obj = JSON.parse(data);
 
@@ -48,9 +48,9 @@ function getCityCode(regionName) {
       return obj.records[i].citycode;
     }
   }
-}
+};
 
-function getSchedule(depPlaceId, arrPlaceId, depPlandTime, trainCode) {
+getSchedule = (depPlaceId, arrPlaceId, depPlandTime, trainCode) => {
   const url =
     "http://openapi.tago.go.kr/openapi/service/TrainInfoService/getStrtpntAlocFndTrainInfo";
 
@@ -75,9 +75,9 @@ function getSchedule(depPlaceId, arrPlaceId, depPlandTime, trainCode) {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
-function getStationCode(regionCode) {
+getStationCode = (regionCode) => {
   const url =
     "http://openapi.tago.go.kr/openapi/service/TrainInfoService/getCtyAcctoTrainSttnList";
   const totalUrl =
@@ -89,14 +89,14 @@ function getStationCode(regionCode) {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
-function checkTrainCode(result, trainName) {
+checkTrainCode = (result, trainName) => {
   for (var i = 0; i < result.length; i++) {
     if (result[i].nodename === trainName) {
       return result[i].nodeid;
     }
   }
-}
+};
 
 module.exports = trainApi;
