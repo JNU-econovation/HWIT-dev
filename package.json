@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/jnu-econovation/hwit-dev/issues"
   },
-  "homepage": "https://github.com/jnu-econovation/hwit-dev#readme"
+  "homepage": "https://github.com/jnu-econovation/hwit-dev#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "fs": "0.0.1-security"
+  }
 }
