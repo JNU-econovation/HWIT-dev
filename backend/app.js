@@ -20,6 +20,17 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/plan", (req, res) => {
+  console.log("post(/plan)요청 실행");
+
+  fs.readFile("../frontend/plan.html", (err, data) => {
+    if (err) throw err;
+
+    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+    res.end(data);
+  });
+});
+
 //서버 실행
 app.listen(3000, () => {
   console.log("서버가 실행됨.");
