@@ -76,7 +76,7 @@
             <h2>로그인</h2>
           </div>
           <div class="content">
-            <form class="text-center border border-light p-5">
+            <form class="text-center border border-light p-5" action="/plan">
               <p class="h4 mb-4">Sign in</p>
               <input
                 type="email"
@@ -224,15 +224,15 @@
     <script>
       // Closes the sidebar menu
       $("#menu-close").click(function(e) {
-        e.preventDefault()
-        $("#sidebar-wrapper").toggleClass("active")
-      })
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+      });
 
       // Opens the sidebar menu
       $("#menu-toggle").click(function(e) {
-        e.preventDefault()
-        $("#sidebar-wrapper").toggleClass("active")
-      })
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+      });
 
       // Scrolls to the selected menu item on the page
       $(function() {
@@ -241,46 +241,46 @@
             location.pathname.replace(/^\//, "") == this.pathname.replace(/^\//, "") ||
             location.hostname == this.hostname
           ) {
-            var target = $(this.hash)
-            target = target.length ? target : $("[name=" + this.hash.slice(1) + "]")
+            var target = $(this.hash);
+            target = target.length ? target : $("[name=" + this.hash.slice(1) + "]");
             if (target.length) {
               $("html,body").animate(
                 {
                   scrollTop: target.offset().top
                 },
                 1000
-              )
-              return false
+              );
+              return false;
             }
           }
-        })
-      })
+        });
+      });
     </script>
   </body>
 
   <!-- 팝업창 js -->
   <script>
-    var signInModal = document.getElementById("SignInModal")
-    var signInBtn = document.getElementById("SignIn")
-    var signInClose = document.getElementsByClassName("closeModal")[0]
-    var signUpModal = document.getElementById("SignUpModal")
-    var signUpBtn = document.getElementById("SignUp")
-    var signUpClose = document.getElementsByClassName("closeModal2")[0]
+    var signInModal = document.getElementById("SignInModal");
+    var signInBtn = document.getElementById("SignIn");
+    var signInClose = document.getElementsByClassName("closeModal")[0];
+    var signUpModal = document.getElementById("SignUpModal");
+    var signUpBtn = document.getElementById("SignUp");
+    var signUpClose = document.getElementsByClassName("closeModal2")[0];
 
     signInBtn.onclick = function() {
-      signInModal.style.display = "block"
-    }
+      signInModal.style.display = "block";
+    };
 
     signInClose.onclick = function() {
-      signInModal.style.display = "none"
-    }
+      signInModal.style.display = "none";
+    };
 
     signUpBtn.onclick = function() {
-      signUpModal.style.display = "block"
-    }
+      signUpModal.style.display = "block";
+    };
 
     signUpClose.onclick = function() {
-      signUpModal.style.display = "none"
-    }
+      signUpModal.style.display = "none";
+    };
   </script>
 </html>
