@@ -4,6 +4,7 @@ const fs = require("fs");
 
 //변수
 const app = express();
+const port = process.env.PORT || 3000;
 
 //설정
 app.use(express.static("./frontend"));
@@ -36,6 +37,6 @@ app.all("*", (req, res) => {
 });
 
 //서버 실행
-app.listen(3000, () => {
-  console.log("서버가 실행됨.");
+app.listen(port, () => {
+  console.log("서버가 실행됨. " + port);
 });
