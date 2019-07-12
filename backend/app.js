@@ -31,6 +31,17 @@ app.get("/plan", (req, res) => {
   });
 });
 
+app.get("/process/plan", (req, res) => {
+  console.log("get(/process/plan)실행");
+
+  fs.readFile("../frontend/polylineEx.html", (err, data) => {
+    if (err) throw err;
+
+    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+    res.end(data);
+  });
+});
+
 //서버 실행
 app.listen(3000, () => {
   console.log("서버가 실행됨.");
