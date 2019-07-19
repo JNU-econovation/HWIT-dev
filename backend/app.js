@@ -9,6 +9,23 @@ const port = process.env.PORT || 3000;
 //설정
 app.use(express.static("./frontend"));
 
+//db
+const mongoClient = require("mongodb").MongoClient;
+var database;
+function connectDB() {
+  var databaseUrl =
+    "mongodb+srv://hwit:ecnv2019@cluster0-qvtb7.mongodb.net/test?retryWrites=true&w=majority";
+
+  mongoClient.connect(databaseUrl, { useNewUrlParser: true }, (err, db) => {
+    if (err) {
+      console.log(err);
+      console.log("db연결시 에러");
+      return;
+    }
+    console.log("db connect");
+  });
+}
+
 //get 요청
 app.get("/", (req, res) => {
   console.log("get(/)요청 실행");
@@ -49,4 +66,5 @@ app.all("*", (req, res) => {
 //서버 실행
 app.listen(port, () => {
   console.log("서버가 실행됨. " + port);
+  connectDB();
 });
