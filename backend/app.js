@@ -1,19 +1,29 @@
 //module
 const express = require("express");
-const fs = require("fs");
-var http = require("http");
-var static = require("serve-static");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var expressSession = require("express-session");
-var expressErrorHandler = require("express-error-handler");
-var mongoose = require("mongoose");
+const router = express.Router();
+const http = require("http");
+const static = require("serve-static");
+const path = require("path");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const expressSession = require("express-session");
+const expressErrorHandler = require("express-error-handler");
+const mongoose = require("mongoose");
 
 var database;
 
 // //변수
 const app = express();
+
+//설정
+app.set("port", process.env.PORT || 3000);
+app.use(express.static("./frontend"));
+app.use("/", static(path.join(__dirname, "")));
+app.use("/frontend", static(path.join(__dirname, "")));
+app.use("/backend", static(path.join(__dirname, "")));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 //데이터베이스에 연결
 function connectDB() {
@@ -22,7 +32,7 @@ function connectDB() {
     "mongodb+srv://hwit:ecnv2019@cluster0-qvtb7.mongodb.net/test?retryWrites=true&w=majority";
 
   mongoose.Promise = global.Promise;
-  mongoose.connect(databaseUrl);
+  mongoose.connect(databaseUrl, { useNewUrlParser: true });
   database = mongoose.connection;
 
   database.on("open", function() {
@@ -46,17 +56,6 @@ function connectDB() {
 
   database.on("error", console.error.bind(console, "mongoose 연결 에러."));
 }
-//var app=express();
-app.set("port", process.env.PORT || 3000);
-
-app.use("/", static(path.join(__dirname, "")));
-app.use("/frontend", static(path.join(__dirname, "")));
-app.use("/backend", static(path.join(__dirname, "")));
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.use(cookieParser());
 
 app.use(
   expressSession({
@@ -70,8 +69,6 @@ app.use(
   })
 );
 
-var router = express.Router();
-
 // router.route('/').get(function(req,res){
 //     var user = req.session.user;
 //     res.render('/index2',{
@@ -79,7 +76,7 @@ var router = express.Router();
 //     });
 // });
 
-router.route("/process/login").post(function(req, res) {
+router.post("/process/login", function(req, res) {
   //요청 객체와 응답객체를 파라미터로 받음
   console.log("/process/login 라우팅 함수 호출");
 
@@ -102,35 +99,26 @@ router.route("/process/login").post(function(req, res) {
         req.session.user = paramId;
         console.log(req.session.user);
 
-        //res.redirect('/',200);
-
-        //  res.writeHead(200,{"Content-Type":"text/html;charset=utf8"});
-        //  res.write('<h1>사용자 로그인 성공</h1>');
-        //  res.write('<div><p>사용자: '+docs[0].email +'</p></div>');
-        //  res.write('<br><br><a herf="http://localhost:3000/index2.html">다시 로그인하기 </a>');
-        //  res.end();
-        res.redirect("/plan.html");
+        res.redirect("/plan");
       } else {
-        //데이터 값이 null
-        console.log("에러 발생");
-        res.writeHead(200, { "Content-Type": "text/html;charset=utf8" });
-        res.write("<h1>사용자 데이터 조회 안됨</h1>");
-        res.end();
+        console.log("사용자 데이터 조회 안됨");
+        res.redirect("/");
       }
     });
   } else {
-    //database 연결이 안되었을때
-    console.log("에러 발생");
-    res.writeHead(200, { "Content-Type": "text/html;charset=utf8" });
-    res.write("<h1>데이터베이스 연결 안됨.</h1>");
-    res.end();
+    console.log("데이터베이스 연결 안됨.");
   }
 });
 
-router.route("/process/logout").get(function(req, res) {
+var page = require("./router/page.js")(app);
+var processPage = require("./router/process.js")(app);
+app.use("/", page);
+app.use("/process", processPage);
+
+router.get("/process/logout", (req, res) => {
   if (req.session.user) {
     console.log("로그아웃 처리");
-    req.session.destroy(function(err) {
+    req.session.destroy(err => {
       if (err) {
         console.log("세션 삭제시 에러");
         return;
@@ -207,9 +195,6 @@ router.route("/process/adduser").post(function(req, res) {
   }
 });
 
-app.use("/", router);
-app.use("/public/", router);
-
 //database를 다루는 함수 정의
 var authUser = function(db, id, password, callback) {
   console.log("authUser 호출됨: " + id + "," + password);
@@ -258,62 +243,3 @@ var server = http.createServer(app).listen(app.get("port"), function() {
   console.log("익스프레스로 웹 서버를 실행함: " + app.get("port"));
   connectDB();
 });
-
-//설정
-app.use(express.static("./frontend"));
-
-// //db
-// const mongoClient = require("mongodb").MongoClient;
-// var database;
-// function connectDB() {
-//   var databaseUrl =
-//     "mongodb+srv://hwit:ecnv2019@cluster0-qvtb7.mongodb.net/test?retryWrites=true&w=majority";
-
-//   mongoClient.connect(databaseUrl, { useNewUrlParser: true }, (err, db) => {
-//     if (err) {
-//       console.log(err);
-//       console.log("db연결시 에러");
-//       return;
-//     }
-//     console.log("db connect");
-//   });
-// }
-
-//get 요청
-app.get("/", (req, res) => {
-  console.log("get(/)요청 실행");
-  fs.readFile("./frontend/index.html", (err, data) => {
-    if (err) throw err;
-
-    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-    res.end(data);
-  });
-});
-
-app.get("/plan", (req, res) => {
-  console.log("get(/plan)요청 실행");
-
-  fs.readFile("./frontend/plan.html", (err, data) => {
-    if (err) throw err;
-
-    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-    res.end(data);
-  });
-});
-
-app.get("/process/plan", (req, res) => {
-  console.log("get(/process/plan)요청 실행");
-
-  fs.readFile("./frontend/polylineEX.html", (err, data) => {
-    if (err) throw err;
-
-    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-    res.end(data);
-  });
-});
-
-// //서버 실행
-// app.listen(port, () => {
-//   console.log("서버가 실행됨. " + port);
-//   connectDB();
-// });
