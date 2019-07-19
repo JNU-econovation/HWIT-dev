@@ -128,13 +128,9 @@ app.post("/process/adduser", (req, res) => {
         return;
       }
       if (result) {
-        console.dir(result);
+        //console.dir(result);
 
-        res.writeHead(200, { "Content-Type": "text/html;charset=utf8" });
-        res.write("<h1>회원가입 완료</h1>");
-        res.write("<div><p>사용자: " + paramId + "</p></div>");
-        res.write('<a href="http://localhost:3000/index2">사이트로 돌아가기</a>');
-        res.end();
+        res.redirect("/");
       } else {
         console.log("에러 발생");
         res.writeHead(200, { "Content-Type": "text/html;charset=utf8" });
