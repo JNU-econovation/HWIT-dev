@@ -10,14 +10,13 @@
     <title>떠나자! 내일로</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./css/popup.css" />
-
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/popup.css" />
     <!-- Custom CSS -->
     <link href="./css/stylish-portfolio.css" rel="stylesheet" />
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link
       href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
       rel="stylesheet"
@@ -33,7 +32,7 @@
   </head>
 
   <body>
-    <!-- Navigation -->
+    <!-- Navigation
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
@@ -57,57 +56,80 @@
           <a href="#contact">로그인/회원가입</a>
         </li>
       </ul>
-    </nav>
+    </nav> -->
 
     <!-- Header -->
     <header id="top" class="header">
-      <div style="position: absolute; left: 870px; top: 180px;" class="text-vertical-center">
-        <h1>설렘을 타다,</h1>
-        <h2>내일로</h2>
-        <br />
+      <div style="position: absolute; left: 800px; top: 180px;" class="text-vertical-center">
+        
+        <h1>설렘을 타다, 내일로</h1>
+        <h2></h2>
+      
+        
+         <!-- <% if(session.user) { %>
+          <span> 환영합니다. </span>
+          <form action="/process/logout" method="post">
+            <button class="btn btn-dark btn-lg">로그아웃</button>
+          </form>
+          
+          <% } else {%>
         <button id="SignIn" class="btn btn-dark btn-lg">로그인</button>
         <button id="SignUp" class="btn btn-dark btn-lg">회원가입</button>
-      </div>
+        <%} %>  -->
+      
+        <a href="#about" class="btn btn-dark btn-lg">내일로 패스란?</a>
+        <button id="SignIn" class="btn btn-dark btn-lg">계획 세우러 가기</button>
+        <button id="SignUp" class="btn btn-dark btn-lg">회원가입</button>
+        
+
+        </div>
 
       <!-- SignIn Modal -->
-      <div id="SignInModal" class="modal">
-        <div class="modal-content">
-          <div class="signUpLogo">
-            <h2>로그인</h2>
-          </div>
-          <div class="content">
-            <form class="text-center border border-light p-5" action="/plan">
-              <p class="h4 mb-4">Sign in</p>
-              <input
-                type="email"
-                id="defaultLoginFormEmail"
-                class="form-control mb-4"
-                placeholder="E-mail"
-              />
-              <br />
-              <input
-                type="password"
-                id="defaultLoginFormPassword"
-                class="form-control mb-4"
-                placeholder="Password"
-              />
-
-              <br />
-              <div class="d-flex justify-content-around">
-                <div>
-                  <a href="">Forgot password?</a>
-                </div>
+      
+        <div id="SignInModal" class="modal">
+            <div class="modal-content">
+              <div class="signUpLogo">
+                <h2>로그인</h2>
               </div>
-              <br />
-              <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
-              <button class="closeModal btn btn-dark btn-block">close</button>
-              <br />
+              <div class="content">
+                <form class="text-center border border-light p-5" method="post" action="/process/login">
+                  <p class="h4 mb-4">Sign in</p>
+                  <input
+                    type="email"
+                    name="userEmail"
+                    class="form-control mb-4"
+                    placeholder="E-mail"
+                  />
+                  <br />
+                  <input
+                    type="password"
+                    name="userPassword"
+                    class="form-control mb-4"
+                    placeholder="Password"
+                  />
+    
+                  <br />
+                  <div class="d-flex justify-content-around">
+                    <div>
+                      <a href="">Forgot password?</a>
+                    <br><br>
+                    <p>
+                        <label for="">계정이 없나요?</label>
+                        <a href="">SignUp</a>
+                    </p>
+                  </div>
+                  </div>
+                  <br />
+                  <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                </form>
+                
+                  <button class="closeModal btn btn-dark btn-block">close</button>
+                  <br />
+   
+      
               <!-- 회원가입 -->
-              <p>
-                <label for="">계정이 없나요?</label>
-                <a href="">SignUp</a>
-              </p>
-            </form>
+            
+            
           </div>
         </div>
       </div>
@@ -119,13 +141,13 @@
             <h2>회원가입</h2>
           </div>
           <div class="content">
-            <form class="text-center border border-light p-5">
+            <form class="text-center border border-light p-5" method="post" action="/process/adduser">
               <p class="h4 mb-4">Sign Up</p>
               <br />
               <span for="">이메일 입력하세요</span>
               <input
                 type="email"
-                id="defaultLoginFormEmail"
+                name="userEmail"
                 class="form-control mb-4"
                 placeholder="E-mail"
               />
@@ -133,7 +155,7 @@
               <span for="">비밀번호를 입력하세요</span>
               <input
                 type="password"
-                id="defaultLoginFormPassword"
+                name="userPassword"
                 class="form-control mb-4"
                 placeholder="Password"
               />
@@ -141,7 +163,7 @@
               <span for="">비밀번호를 다시 입력하세요</span>
               <input
                 type="password"
-                id="defaultLoginFormPassword"
+                name="reuserPassword"
                 class="form-control mb-4"
                 placeholder="Password"
               />
@@ -150,12 +172,15 @@
 
               <br />
               <button class="btn btn-info btn-block my-4" type="submit">Sign Up</button>
+
+            </form>
               <button class="closeModal2 btn btn-dark btn-block">close</button>
               <br />
-            </form>
+            
           </div>
         </div>
       </div>
+    </div>
     </header>
 
     <!-- About -->
@@ -224,15 +249,15 @@
     <script>
       // Closes the sidebar menu
       $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-      });
+        e.preventDefault()
+        $("#sidebar-wrapper").toggleClass("active")
+      })
 
       // Opens the sidebar menu
       $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-      });
+        e.preventDefault()
+        $("#sidebar-wrapper").toggleClass("active")
+      })
 
       // Scrolls to the selected menu item on the page
       $(function() {
@@ -241,46 +266,46 @@
             location.pathname.replace(/^\//, "") == this.pathname.replace(/^\//, "") ||
             location.hostname == this.hostname
           ) {
-            var target = $(this.hash);
-            target = target.length ? target : $("[name=" + this.hash.slice(1) + "]");
+            var target = $(this.hash)
+            target = target.length ? target : $("[name=" + this.hash.slice(1) + "]")
             if (target.length) {
               $("html,body").animate(
                 {
                   scrollTop: target.offset().top
                 },
                 1000
-              );
-              return false;
+              )
+              return false
             }
           }
-        });
-      });
+        })
+      })
     </script>
   </body>
 
   <!-- 팝업창 js -->
   <script>
-    var signInModal = document.getElementById("SignInModal");
-    var signInBtn = document.getElementById("SignIn");
-    var signInClose = document.getElementsByClassName("closeModal")[0];
-    var signUpModal = document.getElementById("SignUpModal");
-    var signUpBtn = document.getElementById("SignUp");
-    var signUpClose = document.getElementsByClassName("closeModal2")[0];
+    var signInModal = document.getElementById("SignInModal")
+    var signInBtn = document.getElementById("SignIn")
+    var signInClose = document.getElementsByClassName("closeModal")[0]
+    var signUpModal = document.getElementById("SignUpModal")
+    var signUpBtn = document.getElementById("SignUp")
+    var signUpClose = document.getElementsByClassName("closeModal2")[0]
 
     signInBtn.onclick = function() {
-      signInModal.style.display = "block";
-    };
+      signInModal.style.display = "block"
+    }
 
     signInClose.onclick = function() {
-      signInModal.style.display = "none";
-    };
+      signInModal.style.display = "none"
+    }
 
     signUpBtn.onclick = function() {
-      signUpModal.style.display = "block";
-    };
+      signUpModal.style.display = "block"
+    }
 
     signUpClose.onclick = function() {
-      signUpModal.style.display = "none";
-    };
+      signUpModal.style.display = "none"
+    }
   </script>
 </html>
