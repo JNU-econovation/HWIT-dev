@@ -3,44 +3,25 @@ var fs = require("fs");
 const serviceKey =
   "jxBxcZrc8JhQ7nNGuLjCrp4EzZ81v1YTowlTLBJiZdYh23K02yVU4%2BlByJ6U7v2RKLZ9FJn%2B5ORy7R3LKb%2BC5w%3D%3D";
 
-const trainApi = async (
-  depRegion,
-  depStation,
-  arrRegion,
-  arrStation,
-  time,
-  trainCode,
-  callback
-) => {
+const trainApi = async (depRegion, depStation, arrRegion, arrStation, time, trainCode) => {
   var depStationCodes = await getStationCode(getCityCode(depRegion));
-  var depStationCode = checkTrainCode(
-    depStationCodes.data.response.body.items.item,
-    depStation
-  );
+  var depStationCode = checkTrainCode(depStationCodes.data.response.body.items.item, depStation);
 
   var arrStationCodes = await getStationCode(getCityCode(arrRegion));
-  var arrStationCode = checkTrainCode(
-    arrStationCodes.data.response.body.items.item,
-    arrStation
-  );
+  var arrStationCode = checkTrainCode(arrStationCodes.data.response.body.items.item, arrStation);
 
-  var result = await getSchedule(
-    depStationCode,
-    arrStationCode,
-    time,
-    trainCode
-  );
+  var result = await getSchedule(depStationCode, arrStationCode, time, trainCode);
 
-  var shedule = parsingData(result);
-  callback(shedule);
+  var shedule = await parsingData(result);
+  return shedule;
 };
 
-parsingData = (result) => {
+parsingData = result => {
   return result.data.response.body.items.item;
 };
 
-getCityCode = (regionName) => {
-  var data = fs.readFileSync("./cityList.json", "utf8");
+getCityCode = regionName => {
+  var data = fs.readFileSync("./backend/cityList.json", "utf8");
   var obj = JSON.parse(data);
 
   for (var i = 0; i < obj.records.length; i++) {
@@ -77,11 +58,9 @@ getSchedule = (depPlaceId, arrPlaceId, depPlandTime, trainCode) => {
   }
 };
 
-getStationCode = (regionCode) => {
-  const url =
-    "http://openapi.tago.go.kr/openapi/service/TrainInfoService/getCtyAcctoTrainSttnList";
-  const totalUrl =
-    url + "?" + "serviceKey=" + serviceKey + "&cityCode=" + regionCode;
+getStationCode = regionCode => {
+  const url = "http://openapi.tago.go.kr/openapi/service/TrainInfoService/getCtyAcctoTrainSttnList";
+  const totalUrl = url + "?" + "serviceKey=" + serviceKey + "&cityCode=" + regionCode;
 
   try {
     const response = axios.get(totalUrl);
