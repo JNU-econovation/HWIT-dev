@@ -53,5 +53,32 @@ module.exports = app => {
     res.redirect("/");
   });
 
+  router.get("/plan/schedule", (req, res) => {
+    console.log("post(/process/plan/schedule)요청 실행");
+    const TrainApi = require("../TrainApi.js");
+    const apihtml = require("../util/popup.js");
+
+    var depStation = "서울";
+    var depRegion = "서울특별시";
+    var arrStation = "대전";
+    var arrRegion = "대전광역시";
+    var time = "20160712";
+
+    var data;
+
+    (async () => {
+      try {
+        data = await TrainApi(depRegion, depStation, arrRegion, arrStation, time, "00");
+        //console.log(data);
+        res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+        //console.log(popup.popup(data));
+        res.end(apihtml.popup(data));
+      } catch (e) {
+        console.log(e);
+
+        console.log("Error caught");
+      }
+    })();
+  });
   return router;
 };
