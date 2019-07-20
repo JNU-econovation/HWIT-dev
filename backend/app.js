@@ -27,6 +27,17 @@ app.use("/backend", static(path.join(__dirname, "")));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(
+  expressSession({
+    key: "sid",
+    secret: "my key",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 24000 * 60 * 60 // 쿠키 유효기간 24시간
+    }
+  })
+);
 
 //get, post
 var page = require("./router/page.js")(app);
@@ -63,18 +74,6 @@ connectDB = () => {
   database.on("error", console.error.bind(console, "mongoose 연결 에러."));
 };
 
-app.use(
-  expressSession({
-    key: "sid",
-    secret: "my key",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 24000 * 60 * 60 // 쿠키 유효기간 24시간
-    }
-  })
-);
-
 app.post("/process/login", (req, res) => {
   //요청 객체와 응답객체를 파라미터로 받음
   console.log("/process/login 라우팅 함수 호출");
@@ -94,11 +93,11 @@ app.post("/process/login", (req, res) => {
       }
 
       if (docs) {
-        //console.dir(docs);
         req.session.user = paramId;
         console.log(req.session.user);
-
-        res.redirect("/plan");
+        req.session.save(() => {
+          res.redirect("/plan");
+        });
       } else {
         console.log("사용자 데이터 조회 안됨");
         res.redirect("/");
@@ -129,6 +128,7 @@ app.post("/process/adduser", (req, res) => {
       }
       if (result) {
         //console.dir(result);
+        console.log("사용자 추가됨");
 
         res.redirect("/");
       } else {
