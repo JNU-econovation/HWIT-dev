@@ -12,12 +12,59 @@
 <div id="wrap" class="section">
     <h2>일정 계획하기</h2>
     <p>여행지를 선택하고 스케줄보기를 클릭하세요.
-        <input type = "button" id = "schedule"  value = "스케쥴보기" onclick="">
+        <input type = "button" id = "schedule"  value = "스케쥴보기" onclick="makeCheckSchedule(destination)">
         <!--<script src = "../backend/TrainApi.js"></script>-->
     </p>    
     <div id="map" style="width:100%;height:600px;"></div>
 </div>
+    
+<!--
+<form action="checkSchedule" method="post" id="myForm">
+    <label for='departureLocation'>출발지역</label>
+
+   <input type='text' name='departureLocation' id='departureLocation' value='서울특별시'>
+
+    <label for='departureStation'>출발역</label>
+
+   <input type='text' name='departureStation' id='departureStation' value='서울'>
+    
+   <label for='arrivalLocation'>도착지역</label>
+
+   <input type='text' name='arrivalLocation' id='arrivalLocation' value='대전광역시'>
+    
+    <label for='arrivalStation'>도착역</label>
+
+   <input type='text' name='arrivalStation' id='arrivalStation' value='대전'>
+    
+   <label for='date'>날짜</label>
+
+   <input type='date' name='date' id='date'>
+
+
+   <button type='submit'>스케줄 확인</button>
+
+</form>
+-->
+    
 <script>
+function makeCheckSchedule(destination){
+    for(var i = 0 ; i < destination.length-1 ; i++){
+        document.write("<form action='checkSchedule' method='post' id='myForm'>");
+        document.write(" <label for='departureLocation'>출발지역</label>");
+        document.write("<input type='text' name='departureLocation' id='departureLocation' value="+destination[i].cityname+">");
+        document.write("<label for='departureStation'>출발역</label>");
+        document.write("<input type='text' name='departureStation' id='departureStation' value="+destination[i].stationname+">");
+        document.write("<label for='arrivalLocation'>도착지역</label>");
+        document.write("<input type='text' name='arrivalLocation' id='arrivalLocation' value="+destination[i+1].cityname+">");
+        document.write("<label for='arrivalStation'>도착역</label>");
+        document.write("<input type='text' name='arrivalStation' id='arrivalStation' value="+destination[i+1].stationname+">");
+        document.write("<label for='date'>날짜</label>");
+        document.write("<input type='date' name='date' id='date'>");
+        document.write("<button type='submit'>스케줄 확인</button>");
+        document.write("</form>");
+    }
+}
+    
 //var trainAPI = require("../backend/TrainApi.js");
 var destination = [];
 function insertDestination(stationInfo){
@@ -542,7 +589,137 @@ naver.maps.Event.addListener(marker2, "click", function(e) {
         infowindow2.open(map, marker2);
     }
 });
+//광주역
+//{x: 126.7907872, y: 35.1377629, _lat: 35.1377629, _lng: 126.7907872},//광주송정
+var gwangjuStation = new naver.maps.LatLng(35.1377629, 126.7907872),
+    marker3 = new naver.maps.Marker({
+        map: map,
+        position: gwangjuStation
+    });
+
+var gwangjuInfo = { cityname : '광주광역시', stationname:'광주'};
+
+var contentString3 = [
+        '<div class="iw_inner">',
+        '   <h3>광주역</h3>',
+        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(gwangjuInfo)">',    
+        /*
+        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+        '   </p>',
+        */
+        '</div>'
+    ].join('');
+
+var infowindow3 = new naver.maps.InfoWindow({
+    content: contentString3,
+    maxWidth: 140,
+    backgroundColor: "#eee",
+    borderColor: "#2db400",
+    borderWidth: 5,
+    anchorSize: new naver.maps.Size(30, 30),
+    anchorSkew: true,
+    anchorColor: "#eee",
+    //pixelOffset: new naver.maps.Point(20, -20)
+});
+
+naver.maps.Event.addListener(marker3, "click", function(e) {
+    if (infowindow3.getMap()) {
+        infowindow3.close();
+    } else {
+        infowindow3.open(map, marker3);
+    }
+});
+//광주역
+
+//부산역 {x: 129.042209, y: 35.1151987, _lat: 35.1151987, _lng: 129.042209}], // 부산역
+var busanStation = new naver.maps.LatLng(35.1151987, 129.042209),
+    marker4 = new naver.maps.Marker({
+        map: map,
+        position: busanStation
+    });
     
+var busanInfo = { cityname : '부산광역시', stationname:'부산'};
+
+var contentString4 = [
+        '<div class="iw_inner">',
+        '   <h3>부산역</h3>',
+        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(busanInfo)">',    
+        /*
+        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+        '   </p>',
+        */
+        '</div>'
+    ].join('');
+
+var infowindow4 = new naver.maps.InfoWindow({
+    content: contentString4,
+    maxWidth: 140,
+    backgroundColor: "#eee",
+    borderColor: "#2db400",
+    borderWidth: 5,
+    anchorSize: new naver.maps.Size(30, 30),
+    anchorSkew: true,
+    anchorColor: "#eee",
+    //pixelOffset: new naver.maps.Point(20, -20)
+});
+
+naver.maps.Event.addListener(marker4, "click", function(e) {
+    if (infowindow4.getMap()) {
+        infowindow4.close();
+    } else {
+        infowindow4.open(map, marker4);
+    }
+});
+//부산역
+//전주역 {y: 35.8498671, _lat: 35.8498671, x: 127.1618098, _lng: 127.1618098}
+var jeonjuStation = new naver.maps.LatLng(35.8498671, 127.1618098),
+    marker5 = new naver.maps.Marker({
+        map: map,
+        position: jeonjuStation
+    });
+    
+var jeonjuInfo = { cityname : '전라북도', stationname:'전주'};
+
+var contentString5 = [
+        '<div class="iw_inner">',
+        '   <h3>전주역</h3>',
+        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(jeonjuInfo)">',    
+        /*
+        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+        '   </p>',
+        */
+        '</div>'
+    ].join('');
+
+var infowindow5 = new naver.maps.InfoWindow({
+    content: contentString5,
+    maxWidth: 140,
+    backgroundColor: "#eee",
+    borderColor: "#2db400",
+    borderWidth: 5,
+    anchorSize: new naver.maps.Size(30, 30),
+    anchorSkew: true,
+    anchorColor: "#eee",
+    //pixelOffset: new naver.maps.Point(20, -20)
+});
+
+naver.maps.Event.addListener(marker5, "click", function(e) {
+    if (infowindow5.getMap()) {
+        infowindow5.close();
+    } else {
+        infowindow5.open(map, marker5);
+    }
+});
+//전주역    
 </script>
 </body>
 </html>
