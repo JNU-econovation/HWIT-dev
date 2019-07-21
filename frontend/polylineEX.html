@@ -31,31 +31,46 @@
     </div>
 
     <div id="table">
-      <form action="/process/schedule" method="post" id="myForm">
-        <label for="departureLocation">출발지역</label>
+      <form name="frmData" id="frmData" method="post" id="myForm">
+        <label for="departureLocation">출발지</label>
 
-        <input type="text" name="departureLocation" id="departureLocation" value="" />
+        <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
 
         <label for="departureStation">출발역</label>
 
-        <input type="text" name="departureStation" id="departureStation" value="" />
+        <input type="text" name="departureStation" id="departureStation" value="서울특별시" />
 
-        <label for="arrivalLocation">도착지역</label>
+        <label for="arrivalLocation">도착지</label>
 
-        <input type="text" name="arrivalLocation" id="arrivalLocation" value="" />
+        <input type="text" name="arrivalLocation" id="arrivalLocation" value="대전광역시" />
 
         <label for="arrivalStation">도착역</label>
 
-        <input type="text" name="arrivalStation" id="arrivalStation" value="" />
+        <input type="text" name="arrivalStation" id="arrivalStation" value="대전" />
 
         <label for="date">날짜</label>
 
         <input type="date" name="date" id="date" />
 
-        <button type="submit">스케줄 확인</button>
+        <!-- <button type="submit">스케줄 확인</button> -->
       </form>
+
+      <button onClick="openPop();">팝업창으로 POST 전송!!</button>
     </div>
     <script>
+      function openPop() {
+        var pop_title = "스케줄표";
+        window.open("/process/schedule", pop_title, "width=1000, height=800");
+
+        var frmData = document.frmData;
+        frmData.target = pop_title;
+        frmData.action = "/process/schedule";
+
+        frmData.submit();
+      }
+      function showPopup() {
+        window.open("/process/schedule", "a", "width=400, height=300, left=100, top=50");
+      }
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =

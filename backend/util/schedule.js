@@ -26,6 +26,8 @@ exports.popup = array => {
               <tbody>
                 < 조회 된 시간표가 없습니다. >
               </tbody>
+              </table>
+              <span style="float:right"><button onClick='window.close();' class="btn btn-outline-secondary">닫기</button> </span>
     </body>
     </html>`;
   }
@@ -77,6 +79,9 @@ exports.popup = array => {
               <tbody>
                 ${tablerow}
               </tbody>
+              </table>
+              <span style="float:right"><button onClick='window.close();' class="btn btn-outline-secondary">닫기</button> </span>
+              <span style="float:right"><button onClick='window.close();' class="btn btn-outline-primary">확인</button> </span>
     </body>
     </html>`;
 

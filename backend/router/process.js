@@ -64,6 +64,17 @@ module.exports = app => {
     let arrivalLocation = req.body.arrivalLocation;
     let arrivalStation = req.body.arrivalStation;
     let date = req.body.date; //2016-11-30
+    console.log(
+      departureLocation +
+        "/" +
+        departureStation +
+        "/" +
+        arrivalLocation +
+        "/" +
+        arrivalStation +
+        "/" +
+        date
+    );
 
     let data;
 
@@ -75,12 +86,11 @@ module.exports = app => {
           arrivalLocation,
           arrivalStation,
           dateUtil.dateToStr(date),
-          "01"
+          "00"
         );
 
         res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
         console.log(data);
-
         res.end(apihtml.popup(data));
       } catch (err) {
         console.log(err);

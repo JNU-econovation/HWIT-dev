@@ -1,30 +1,30 @@
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>팝업창으로 POST 전송하기</title>
-
-    <script type="text/javascript" language="javascript">
-      // 팝업오픈하여 폼데이터 Post 전송
-      function openPop() {
-        var pop_title = "popupOpener";
-
-        window.open("", pop_title);
-
-        var frmData = document.frmData;
-        frmData.target = pop_title;
-        frmData.action = "./plan.html";
-
-        frmData.submit();
-      }
-    </script>
-  </head>
-  <body>
-    <!-- 팝업창으로 전송하는 정보 -->
-    <form name="frmData" id="frmData" method="post">
-      <input type="text" name="name" id="name" value="홍길동" />
-      <input type="text" name="id" id="id" value="gildong" />
-    </form>
-
-    <a href="#" onClick="openPop();">팝업창으로 POST 전송!!</a>
-  </body>
-</html>
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <body>
+            <table class="table">
+              <strong style="font-size:20px">열차시간표 조회</strong>
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">출발지</th>
+                  <th scope="col">도착지</th>
+                  <th scope="col">날짜</th>
+                  <th scope="col">열차 출발 시간</th>
+                  <th scope="col">열차 도착 시간</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+            <span style="float:right"><button onClick='window.close();' class="btn btn-outline-secondary">닫기</button> </span>
+    </body>
+    </html>
