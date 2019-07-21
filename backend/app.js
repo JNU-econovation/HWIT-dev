@@ -9,13 +9,14 @@ const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
 const expressErrorHandler = require("express-error-handler");
 const mongoose = require("mongoose");
-const fs = require('fs');
+const fs = require("fs");
 
 var database;
 
 // //변수
 const app = express();
-const databaseUrl = "mongodb+srv://hwit:ecnv2019@cluster0-qvtb7.mongodb.net/test?retryWrites=true&w=majority";
+const databaseUrl =
+  "mongodb+srv://hwit:ecnv2019@cluster0-qvtb7.mongodb.net/test?retryWrites=true&w=majority";
 var databaseUtil = require("./util/database.js");
 
 //설정
@@ -59,6 +60,17 @@ connectDB = () => {
       email: String,
       password: String,
       repassword: String
+    });
+
+    PlanSchema = mongoose.Schema({
+      title: String
+    });
+
+    ScheduleSchema = mongoose.Schema({
+      depplacename: String,
+      arrplacename: String,
+      depplandtime: String,
+      arrplandtime: String
     });
 
     console.log("UserSchema 정의함. ");
@@ -144,24 +156,6 @@ app.post("/process/adduser", (req, res) => {
     res.write("<h1>데이터베이스 연결 안됨.</h1>");
     res.end();
   }
-});
-//스케줄 확인
-app.post("/checkSchedule", function(request, response){
-
-  // form에서 전송된 내용은 request에 담겨 있습니다.
-
-  // request.body.email에서 .email은 input 요소의 name attribute 입니다.(pwd 동일한 방식)
-
-  var departureLocation = request.body.departureLocation;
-  var departureStation = request.body.departureStation;
-  var arrivalLocation = request.body.arrivalLocation;
-  var arrivalStation = request.body.arrivalStation;
-  var date = request.body.date;
-  // 요청 페이지로 응답하기 위해서는 response를 사용합니다.
-  console.log(departureLocation+"/"+departureStation+"/"+arrivalLocation+"/"+arrivalStation+"/"+date);
-  response.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-  response.end(departureLocation+"/"+departureStation+"/"+arrivalLocation+"/"+arrivalStation+"/"+date);
-    
 });
 
 //에러 처리
