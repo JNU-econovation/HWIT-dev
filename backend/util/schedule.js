@@ -34,9 +34,9 @@ exports.popup = array => {
   let tablerow = "";
   console.log("popup 모듈 실행됨.");
   for (var i = 0; i < array.length; i++) {
-    tablerow += '<tr scope="row"><td><input type="checkbox" name="scheduleArray" id=""></td>';
-    tablerow += "<td>" + array[i].depplacename + "역</td>";
-    tablerow += "<td>" + array[i].arrplacename + "역</td>";
+    tablerow += '<tr scope="row" class = "schedule"><td>' + (i + 1) + "</td>";
+    tablerow += `<td class="depplacename">` + array[i].depplacename + "역</td>";
+    tablerow += `<td class="arrplacename">` + array[i].arrplacename + "역</td>";
     var tmp = String(array[i].depplandtime).substring(0, 8);
     tablerow +=
       "<td>" +
@@ -47,9 +47,15 @@ exports.popup = array => {
       tmp.substring(6) +
       "</td>";
     tmp = String(array[i].depplandtime).substring(8, 12);
-    tablerow += "<td>" + tmp.substring(0, 2) + " : " + tmp.substring(2) + "</td>";
+    tablerow +=
+      `<td class="depplandtime">` + tmp.substring(0, 2) + " : " + tmp.substring(2) + "</td>";
     tmp = String(array[i].arrplandtime).substring(8, 12);
-    tablerow += "<td>" + tmp.substring(0, 2) + " : " + tmp.substring(2) + "</td>";
+    tablerow +=
+      `<td class="arrplandtime">` + tmp.substring(0, 2) + " : " + tmp.substring(2) + "</td>";
+    tablerow +=
+      `<td><button onClick='submitSchedule(` +
+      i +
+      `)' class="btn btn-outline-primary">선택</button> </td>`;
     tablerow += "</tr>";
   }
 
@@ -69,7 +75,7 @@ exports.popup = array => {
               <strong style="font-size:20px">열차시간표 조회</strong>
               <thead>
                 <tr>
-                  <th scope="col"></th>
+                  <th scope="col">No</th>
                   <th scope="col">출발지</th>
                   <th scope="col">도착지</th>
                   <th scope="col">날짜</th>
@@ -82,28 +88,19 @@ exports.popup = array => {
               </tbody>
               </table>
               <span style="float:right"><button onClick='window.close();' class="btn btn-outline-secondary">닫기</button> </span>
-              <span style="float:right"><button onClick='submitCheckedSchedule()' class="btn btn-outline-primary">확인</button> </span>
+              <span style="float:right"></span>
     <script>
-          function submitCheckedSchedule(){
-                console.log("함수실행됨");
-                var chk = document.getElementsByName("scheduleArray"); //체크박스 객체담기
-                var len = chk.length;
-                var checkIndex ='';
-                var checkRow = '';
-                for(var i = 0 ; i < len ;i++ ){
-                    if(chk[i].checked == true){
-                        checkIndex = i;
-                    }
-                }
-                console.log(checkIndex+"가 선택");
-                alert("일정에 추가 되었습니다.");
-                window.close();
+          function submitSchedule(i){
+                var data = document.getElementsByClassName("schedule")[i]; //체크박스 객체담기
+                var depplacename = data.getElementsByClassName("depplacename")[0].innerHTML;
+                var arrplacename = data.getElementsByClassName("arrplacename")[0].innerHTML;
+                var depplandtime = data.getElementsByClassName("depplandtime")[0].innerHTML;
+                var arrplandtime = data.getElementsByClassName("arrplandtime")[0].innerHTML;
+                window.location='/process/schedule/save?depplacename='+depplacename+'&arrplacename='+arrplacename+'&depplandtime='+depplandtime+'&arrplandtime='+arrplandtime;
            }
     </script>
     </body>
     </html>`;
 
   return html;
-    
-
 };
