@@ -14,6 +14,7 @@ const fs = require("fs");
 var database;
 
 // //변수
+const Schema = mongoose.Schema;
 const app = express();
 const databaseUrl =
   "mongodb+srv://hwit:ecnv2019@cluster0-qvtb7.mongodb.net/test?retryWrites=true&w=majority";
@@ -56,17 +57,17 @@ connectDB = () => {
   database.on("open", () => {
     console.log("데이터베이스에 연결됨: " + databaseUrl);
 
-    UserSchema = mongoose.Schema({
+    const UserSchema = Schema({
+      _id: Schema.Types.ObjectId,
       email: String,
       password: String,
-      repassword: String
+      repassword: String,
+      Schedules: [{ type: Schema.Types.ObjectId, ref: "Schedule" }]
     });
 
-    PlanSchema = mongoose.Schema({
-      title: String
-    });
-
-    ScheduleSchema = mongoose.Schema({
+    const ScheduleSchema = Schema({
+      author: { type: Schema.Types.ObjectId, ref: "touser" },
+      title: String,
       depplacename: String,
       arrplacename: String,
       depplandtime: String,
@@ -74,7 +75,7 @@ connectDB = () => {
     });
 
     console.log("UserSchema 정의함. ");
-
+    ScheduleModel = mongoose.model("Schedule", ScheduleSchema);
     UserModel = mongoose.model("touser", UserSchema);
     console.log("UserModel 정의함. ");
   });
@@ -118,6 +119,36 @@ app.post("/process/login", (req, res) => {
   } else {
     console.log("데이터베이스 연결 안됨.");
   }
+});
+
+app.get("/process/schedule/save", (req, res) => {
+  console.log("get(process/schedule/save)요청 실행됨");
+
+  const title = req.session.title;
+
+  const depplacename = req.query.depplacename;
+  const arrplacename = req.query.arrplacename;
+  const depplandtime = req.query.depplandtime;
+  const arrplandtime = req.query.arrplandtime;
+
+  console.log(
+    title + " : " + depplacename + "/" + arrplacename + "/" + depplandtime + "/" + arrplandtime
+  );
+  require("./util/database.js").addSchedule(
+    database,
+    req.session.user,
+    title,
+    depplacename,
+    arrplacename,
+    depplandtime,
+    arrplandtime
+  );
+  fs.readFile("./frontend/close.html", (err, data) => {
+    if (err) throw err;
+
+    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+    res.end(data);
+  });
 });
 
 app.post("/process/adduser", (req, res) => {
