@@ -7,6 +7,10 @@ module.exports = app => {
   router.get("/plan", (req, res) => {
     console.log("get(/process/plan)요청 실행");
 
+    const title = req.query.title;
+    console.log("계획 제목 : " + title);
+    req.session.title = title;
+
     fs.readFile("./frontend/polylineEX.html", (err, data) => {
       if (err) throw err;
 
@@ -98,21 +102,25 @@ module.exports = app => {
     })();
   });
 
-  router.get("/schedule/save", (req, res) => {
-    console.log("get(process/schedule/save)요청 실행됨");
+  // router.get("/schedule/save", (req, res) => {
+  //   console.log("get(process/schedule/save)요청 실행됨");
 
-    const depplacename = req.query.depplacename;
-    const arrplacename = req.query.arrplacename;
-    const depplandtime = req.query.depplandtime;
-    const arrplandtime = req.query.arrplandtime;
+  //   const title = req.session.title;
 
-    console.log(depplacename + "/" + arrplacename + "/" + depplandtime + "/" + arrplandtime);
-    fs.readFile("./frontend/close.html", (err, data) => {
-      if (err) throw err;
+  //   const depplacename = req.query.depplacename;
+  //   const arrplacename = req.query.arrplacename;
+  //   const depplandtime = req.query.depplandtime;
+  //   const arrplandtime = req.query.arrplandtime;
 
-      res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-      res.end(data);
-    });
-  });
+  //   console.log(
+  //     title + " : " + depplacename + "/" + arrplacename + "/" + depplandtime + "/" + arrplandtime
+  //   );
+  //   fs.readFile("./frontend/close.html", (err, data) => {
+  //     if (err) throw err;
+
+  //     res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+  //     res.end(data);
+  //   });
+  // });
   return router;
 };

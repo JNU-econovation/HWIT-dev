@@ -1,7 +1,13 @@
 exports.addUser = (db, id, password, repassword, callback) => {
+  const mongoose = require("mongoose");
   console.log("addUser 호출됨 : " + id + ", " + password + ", " + password);
 
-  var user = new UserModel({ email: id, password: password, repassword: repassword });
+  var user = new UserModel({
+    _id: mongoose.Types.ObjectId(),
+    email: id,
+    password: password,
+    repassword: repassword
+  });
 
   user.save(err => {
     if (err) {
