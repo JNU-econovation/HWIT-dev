@@ -57,7 +57,7 @@ exports.addSchedule = (
       if (err) return console.log(err);
 
       const schedule = new ScheduleModel({
-        author: user._id,
+        //author: user._id,
         title: title,
         depplacename: depplacename,
         arrplacename: arrplacename,
