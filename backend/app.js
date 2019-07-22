@@ -58,6 +58,7 @@ connectDB = () => {
     console.log("데이터베이스에 연결됨: " + databaseUrl);
 
     const UserSchema = Schema({
+      _id: Schema.Types.ObjectId,
       email: String,
       password: String,
       repassword: String,
@@ -120,7 +121,7 @@ app.post("/process/login", (req, res) => {
   }
 });
 
-app.get("/schedule/save", (req, res) => {
+app.get("/process/schedule/save", (req, res) => {
   console.log("get(process/schedule/save)요청 실행됨");
 
   const title = req.session.title;
@@ -133,7 +134,15 @@ app.get("/schedule/save", (req, res) => {
   console.log(
     title + " : " + depplacename + "/" + arrplacename + "/" + depplandtime + "/" + arrplandtime
   );
-  //DB save
+  require("./util/database.js").addSchedule(
+    database,
+    req.session.user,
+    title,
+    depplacename,
+    arrplacename,
+    depplandtime,
+    arrplandtime
+  );
   fs.readFile("./frontend/close.html", (err, data) => {
     if (err) throw err;
 
@@ -141,31 +150,6 @@ app.get("/schedule/save", (req, res) => {
     res.end(data);
   });
 });
-
-function addSchedule(db, userEmail, title, depplacename, arrplacename, depplandtime, arrplandtime) {
-  console.log("addScheule 호출됨");
-
-  UserModel.find({ email: userEmail }, (err, user) => {
-    if (err) console.log(err);
-
-    user.save(function(err) {
-      if (err) return handleError(err);
-
-      const schedule = new Schedule({
-        title: title,
-        depplacename: depplacename,
-        arrplacename: arrplacename,
-        depplandtime: depplandtime,
-        arrplandtime: arrplandtime
-      });
-
-      schedule.save(function(err) {
-        if (err) return handleError(err);
-        // thats it!
-      });
-    });
-  });
-}
 
 app.post("/process/adduser", (req, res) => {
   console.log("/process/adduser 라우팅 함수 호출됨.");

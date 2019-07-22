@@ -36,3 +36,39 @@ exports.authUser = (db, id, password, callback) => {
     }
   });
 };
+
+exports.addSchedule = (
+  db,
+  userEmail,
+  title,
+  depplacename,
+  arrplacename,
+  depplandtime,
+  arrplandtime
+) => {
+  console.log("addScheule 호출됨");
+
+  UserModel.findOne({ email: userEmail }, (err, user) => {
+    console.log("user 모델 가져오기");
+
+    user.save(err => {
+      console.log("user save 실행");
+
+      if (err) return console.log(err);
+
+      const schedule = new ScheduleModel({
+        author: user._id,
+        title: title,
+        depplacename: depplacename,
+        arrplacename: arrplacename,
+        depplandtime: depplandtime,
+        arrplandtime: arrplandtime
+      });
+      console.log("schedule 스키마 생성");
+
+      schedule.save(err => {
+        if (err) return console.log(err);
+      });
+    });
+  });
+};
