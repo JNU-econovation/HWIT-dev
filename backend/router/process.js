@@ -4,20 +4,20 @@ module.exports = app => {
   var mongoose = require("mongoose");
   var router = express.Router();
 
-  router.get("/plan", (req, res) => {
-    console.log("get(/process/plan)요청 실행");
+  // router.get("/plan", (req, res) => {
+  //   console.log("get(/process/plan)요청 실행");
 
-    const title = req.query.title;
-    console.log("계획 제목 : " + title);
-    req.session.title = title;
+  //   const title = req.query.title;
+  //   console.log("계획 제목 : " + title);
+  //   req.session.title = title;
 
-    fs.readFile("./frontend/polylineEX.html", (err, data) => {
-      if (err) throw err;
+  //   fs.readFile("./frontend/polylineEX.html", (err, data) => {
+  //     if (err) throw err;
 
-      res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-      res.end(data);
-    });
-  });
+  //     res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+  //     res.end(data);
+  //   });
+  // });
 
   router.get("/logout", (req, res) => {
     console.log("get(/process/logout) 라우팅 함수 호출");

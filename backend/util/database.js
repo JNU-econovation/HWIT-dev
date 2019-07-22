@@ -37,38 +37,39 @@ exports.authUser = (db, id, password, callback) => {
   });
 };
 
-exports.addSchedule = (
-  db,
-  userEmail,
-  title,
-  depplacename,
-  arrplacename,
-  depplandtime,
-  arrplandtime
-) => {
-  console.log("addScheule 호출됨");
+exports.addPlan = (db, userEmail, title) => {
+  console.log("addPlan 호출됨");
 
   UserModel.findOne({ email: userEmail }, (err, user) => {
-    console.log("user 모델 가져오기");
+    const plan = new PlanModel({
+      title: title
+    });
 
-    user.save(err => {
-      console.log("user save 실행");
+    plan.save(err => {
+      if (err) console.log(err);
 
-      if (err) return console.log(err);
+      user.Plans.push(plan._id);
+      user.save();
+    });
+  });
+};
 
-      const schedule = new ScheduleModel({
-        //author: user._id,
-        title: title,
-        depplacename: depplacename,
-        arrplacename: arrplacename,
-        depplandtime: depplandtime,
-        arrplandtime: arrplandtime
-      });
-      console.log("schedule 스키마 생성");
+exports.addSchedule = (db, title, depplacename, arrplacename, depplandtime, arrplandtime) => {
+  console.log("addScheule 호출됨");
 
-      schedule.save(err => {
-        if (err) return console.log(err);
-      });
+  PlanModel.findOne({ title: title }, (err, plan) => {
+    const schedule = new ScheduleModel({
+      depplacename: depplacename,
+      arrplacename: arrplacename,
+      depplandtime: depplandtime,
+      arrplandtime: arrplandtime
+    });
+
+    schedule.save(err => {
+      if (err) console.log(err);
+
+      plan.Schedules.push(schedule._id);
+      plan.save();
     });
   });
 };

@@ -58,16 +58,18 @@ connectDB = () => {
     console.log("데이터베이스에 연결됨: " + databaseUrl);
 
     const UserSchema = Schema({
-      _id: Schema.Types.ObjectId,
       email: String,
       password: String,
       repassword: String,
+      Plans: [{ type: Schema.Types.ObjectId, ref: "Plan" }]
+    });
+
+    const PlanSchema = Schema({
+      title: String,
       Schedules: [{ type: Schema.Types.ObjectId, ref: "Schedule" }]
     });
 
     const ScheduleSchema = Schema({
-      author: { type: Schema.Types.ObjectId, ref: "touser" },
-      title: String,
       depplacename: String,
       arrplacename: String,
       depplandtime: String,
@@ -77,6 +79,7 @@ connectDB = () => {
     console.log("UserSchema 정의함. ");
     ScheduleModel = mongoose.model("Schedule", ScheduleSchema);
     UserModel = mongoose.model("touser", UserSchema);
+    PlanModel = mongoose.model("Plan", PlanSchema);
     console.log("UserModel 정의함. ");
   });
 
@@ -134,16 +137,25 @@ app.get("/process/schedule/save", (req, res) => {
   console.log(
     title + " : " + depplacename + "/" + arrplacename + "/" + depplandtime + "/" + arrplandtime
   );
-  require("./util/database.js").addSchedule(
-    database,
-    req.session.user,
-    title,
-    depplacename,
-    arrplacename,
-    depplandtime,
-    arrplandtime
-  );
+  databaseUtil.addSchedule(database, title, depplacename, arrplacename, depplandtime, arrplandtime);
   fs.readFile("./frontend/close.html", (err, data) => {
+    if (err) throw err;
+
+    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+    res.end(data);
+  });
+});
+
+app.get("/process/plan", (req, res) => {
+  console.log("get(/process/plan)요청 실행");
+
+  const title = req.query.title;
+  console.log("계획 제목 : " + title);
+  req.session.title = title;
+
+  //plan db 저장
+  databaseUtil.addPlan(database, req.session.user, title);
+  fs.readFile("./frontend/polylineEX.html", (err, data) => {
     if (err) throw err;
 
     res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
