@@ -54,7 +54,15 @@ exports.addPlan = (db, userEmail, title) => {
   });
 };
 
-exports.addSchedule = (db, title, depplacename, arrplacename, depplandtime, arrplandtime) => {
+exports.addSchedule = (
+  db,
+  title,
+  depplacename,
+  arrplacename,
+  depplandtime,
+  arrplandtime,
+  traingradename
+) => {
   console.log("addScheule 호출됨");
 
   PlanModel.findOne({ title: title }, (err, plan) => {
@@ -62,7 +70,8 @@ exports.addSchedule = (db, title, depplacename, arrplacename, depplandtime, arrp
       depplacename: depplacename,
       arrplacename: arrplacename,
       depplandtime: depplandtime,
-      arrplandtime: arrplandtime
+      arrplandtime: arrplandtime,
+      traingradename: traingradename
     });
 
     schedule.save(err => {

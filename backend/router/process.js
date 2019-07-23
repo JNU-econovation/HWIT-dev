@@ -84,18 +84,53 @@ module.exports = app => {
 
     (async () => {
       try {
+        let result = [];
         data = await TrainApi(
           departureLocation,
           departureStation,
           arrivalLocation,
           arrivalStation,
           dateUtil.dateToStr(date),
-          "00"
+          "01"
+        );
+        console.log(data);
+        if (data != undefined) {
+          for (var i = 0; i < data.length; i++) {
+            result.push(data[i]);
+          }
+        }
+        data = await TrainApi(
+          departureLocation,
+          departureStation,
+          arrivalLocation,
+          arrivalStation,
+          dateUtil.dateToStr(date),
+          "02"
+        );
+        console.log(data);
+        if (data != undefined) {
+          for (var i = 0; i < data.length; i++) {
+            result.push(data[i]);
+          }
+        }
+        data = await TrainApi(
+          departureLocation,
+          departureStation,
+          arrivalLocation,
+          arrivalStation,
+          dateUtil.dateToStr(date),
+          "04"
         );
 
+        if (data != undefined) {
+          for (var i = 0; i < data.length; i++) {
+            result.push(data[i]);
+          }
+        }
+
         res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-        console.log(data);
-        res.end(apihtml.popup(data));
+        console.log(result);
+        res.end(apihtml.popup(result));
       } catch (err) {
         console.log(err);
       }
