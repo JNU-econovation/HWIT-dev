@@ -21,6 +21,7 @@ exports.popup = array => {
                   <th scope="col">날짜</th>
                   <th scope="col">열차 출발 시간</th>
                   <th scope="col">열차 도착 시간</th>
+                  <th scope="col">열차 종류</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,10 +53,12 @@ exports.popup = array => {
     tmp = String(array[i].arrplandtime).substring(8, 12);
     tablerow +=
       `<td class="arrplandtime">` + tmp.substring(0, 2) + " : " + tmp.substring(2) + "</td>";
+    tablerow += `<td class="traingradename">` + array[i].traingradename + "</td>";
     tablerow +=
       `<td><button onClick='submitSchedule(` +
       i +
       `)' class="btn btn-outline-primary">선택</button> </td>`;
+
     tablerow += "</tr>";
   }
 
@@ -81,6 +84,7 @@ exports.popup = array => {
                   <th scope="col">날짜</th>
                   <th scope="col">열차 출발 시간</th>
                   <th scope="col">열차 도착 시간</th>
+                  <th scope="col">열차 종류</th>
                 </tr>
               </thead>
               <tbody>
@@ -96,7 +100,9 @@ exports.popup = array => {
                 var arrplacename = data.getElementsByClassName("arrplacename")[0].innerHTML;
                 var depplandtime = data.getElementsByClassName("depplandtime")[0].innerHTML;
                 var arrplandtime = data.getElementsByClassName("arrplandtime")[0].innerHTML;
-                window.location='/process/schedule/save?depplacename='+depplacename+'&arrplacename='+arrplacename+'&depplandtime='+depplandtime+'&arrplandtime='+arrplandtime;
+                var traingradename = data.getElementsByClassName("traingradename")[0].innerHTML;
+
+                window.location='/process/schedule/save?depplacename='+depplacename+'&arrplacename='+arrplacename+'&depplandtime='+depplandtime+'&arrplandtime='+arrplandtime+'&traingradename='+traingradename;
            }
     </script>
     </body>

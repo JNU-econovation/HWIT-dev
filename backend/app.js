@@ -73,7 +73,8 @@ connectDB = () => {
       depplacename: String,
       arrplacename: String,
       depplandtime: String,
-      arrplandtime: String
+      arrplandtime: String,
+      traingradename: String
     });
 
     console.log("UserSchema 정의함. ");
@@ -133,11 +134,20 @@ app.get("/process/schedule/save", (req, res) => {
   const arrplacename = req.query.arrplacename;
   const depplandtime = req.query.depplandtime;
   const arrplandtime = req.query.arrplandtime;
+  const traingradename = req.query.traingradename;
 
   console.log(
     title + " : " + depplacename + "/" + arrplacename + "/" + depplandtime + "/" + arrplandtime
   );
-  databaseUtil.addSchedule(database, title, depplacename, arrplacename, depplandtime, arrplandtime);
+  databaseUtil.addSchedule(
+    database,
+    title,
+    depplacename,
+    arrplacename,
+    depplandtime,
+    arrplandtime,
+    traingradename
+  );
   fs.readFile("./frontend/close.html", (err, data) => {
     if (err) throw err;
 
