@@ -21,7 +21,7 @@ parsingData = result => {
 };
 
 getCityCode = regionName => {
-  var data = fs.readFileSync("./backend/cityList.json", "utf8");
+  var data = fs.readFileSync("./backend/api/cityList.json", "utf8");
   var obj = JSON.parse(data);
 
   for (var i = 0; i < obj.records.length; i++) {
