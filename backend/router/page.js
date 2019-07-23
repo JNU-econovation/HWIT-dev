@@ -35,12 +35,7 @@ module.exports = app => {
     console.log("get(/post)요청 실행");
 
     if (req.session.user) {
-      fs.readFile("./backend/views/posts/index.ejs", (err, data) => {
-        if (err) throw err;
-
-        res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-        res.end(data);
-      });
+      res.render("post/index");
     } else {
       res.redirect("/");
     }
@@ -49,17 +44,11 @@ module.exports = app => {
     console.log("get(/myplan)요청 실행");
 
     if (req.session.user) {
-      fs.readFile("./backend/views/plan/myplan.ejs", (err, data) => {
-        if (err) throw err;
-
-        res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-        res.end(data);
-      });
+      res.render("plan/myplan");
     } else {
       res.redirect("/");
     }
   });
-
 
   return router;
 };

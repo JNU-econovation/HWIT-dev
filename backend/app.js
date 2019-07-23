@@ -23,7 +23,8 @@ var databaseUtil = require("./util/database.js");
 
 //설정
 app.set("port", process.env.PORT || 3000);
-app.set("view engine","ejs");
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
 app.use(express.static("./frontend"));
 app.use("/", static(path.join(__dirname, "views/plan")));
 app.use("/frontend", static(path.join(__dirname, "")));
