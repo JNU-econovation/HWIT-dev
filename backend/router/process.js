@@ -59,7 +59,7 @@ module.exports = app => {
 
   router.post("/schedule", (req, res) => {
     console.log("post(/process/plan/schedule)요청 실행");
-    const TrainApi = require("../TrainApi.js");
+    const TrainApi = require("../api/TrainApi.js");
     const apihtml = require("../util/schedule.js");
     const dateUtil = require("../util/date.js");
 
@@ -84,18 +84,24 @@ module.exports = app => {
 
     (async () => {
       try {
-        data = await TrainApi(
-          departureLocation,
-          departureStation,
-          arrivalLocation,
-          arrivalStation,
-          dateUtil.dateToStr(date),
-          "00"
-        );
+        const ArrayUtil = require("../util/array.js");
+        let result = [];
+        const trainNo = ["01", "02", "04", "09", "08"];
+        for (var i = 0; i < trainNo.length; i++) {
+          data = await TrainApi(
+            departureLocation,
+            departureStation,
+            arrivalLocation,
+            arrivalStation,
+            dateUtil.dateToStr(date),
+            trainNo[i]
+          );
+          ArrayUtil.pushArray(result, data);
+        }
 
         res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-        console.log(data);
-        res.end(apihtml.popup(data));
+        console.log(result);
+        res.end(apihtml.popup(result));
       } catch (err) {
         console.log(err);
       }
