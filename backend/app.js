@@ -10,6 +10,7 @@ const expressSession = require("express-session");
 const expressErrorHandler = require("express-error-handler");
 const mongoose = require("mongoose");
 const fs = require("fs");
+const methodOverride = require("method-override");
 
 var database;
 
@@ -22,13 +23,16 @@ var databaseUtil = require("./util/database.js");
 
 //설정
 app.set("port", process.env.PORT || 3000);
+app.set("view engine","ejs");
 app.use(express.static("./frontend"));
-app.use("/", static(path.join(__dirname, "")));
+app.use("/", static(path.join(__dirname, "views/plan")));
 app.use("/frontend", static(path.join(__dirname, "")));
 app.use("/backend", static(path.join(__dirname, "")));
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use("/posts", static(path.join(__dirname, "./backend/views/posts")));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 app.use(
   expressSession({
     key: "sid",
