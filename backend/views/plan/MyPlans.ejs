@@ -23,7 +23,7 @@
                         <tr>
                         <th scope="row" colspan="1"><%= i+1 %></th>
                         <td colspan="3" class="<%= i %>"><%= plans[i].title %></td> 
-                        <td colspan="1"><%= plans[i].date %></td>
+                        <td colspan="1"><%= plans[i].date.getFullYear() %>.<%= plans[i].date.getMonth()+1 %>.<%= plans[i].date.getDate() %></td>
                         <td colspan="1">
                           <button type = 'button' class = "btn btn-outline-info" onClick = openPop(<%= i %>)>보기</button>
                         </td> 
