@@ -26,7 +26,7 @@ module.exports = (app, database) => {
       if (err) console.log(err);
 
       try {
-        res.render("plan/schedule", { title: title, schedule: result });
+        res.render("plan/Schedule", { title: title, schedule: result });
       } catch (err) {
         console.log(err);
       }
