@@ -23,7 +23,8 @@ var databaseUtil = require("./util/database.js");
 
 //설정
 app.set("port", process.env.PORT || 3000);
-app.set("view engine","ejs");
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
 app.use(express.static("./frontend"));
 app.use("/", static(path.join(__dirname, "views/plan")));
 app.use("/frontend", static(path.join(__dirname, "")));
@@ -213,6 +214,20 @@ app.post("/process/adduser", (req, res) => {
     res.write("<h1>데이터베이스 연결 안됨.</h1>");
     res.end();
   }
+});
+
+app.get("/myPlans", (req, res) => {
+  console.log("get(myplan) 요청됨.");
+
+  databaseUtil.getPlans(database, "please@co.kr", (err, result) => {
+    if (err) console.log(err);
+    console.log(result);
+    try {
+      res.render("plan/MyPlans", { plans: result });
+    } catch (err) {
+      console.log(err);
+    }
+  });
 });
 
 //에러 처리

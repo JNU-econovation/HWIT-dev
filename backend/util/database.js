@@ -82,3 +82,15 @@ exports.addSchedule = (
     });
   });
 };
+
+exports.getPlans = (database, email, callback) => {
+  console.log("getPlans 요청됨");
+
+  UserModel.findOne({ email: email })
+    .populate("Plans")
+    .exec((err, data) => {
+      if (err) callback(err, null);
+
+      callback(null, data.Plans);
+    });
+};
