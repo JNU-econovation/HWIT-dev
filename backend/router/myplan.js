@@ -9,7 +9,7 @@ module.exports = (app, database) => {
 
     databaseUtil.getPlans(database, "please@co.kr", (err, result) => {
       if (err) console.log(err);
-      console.log(result);
+      //console.log(result);
       try {
         res.render("plan/MyPlans", { plans: result });
       } catch (err) {
@@ -25,7 +25,11 @@ module.exports = (app, database) => {
     databaseUtil.getSchedule(database, title, (err, result) => {
       if (err) console.log(err);
 
-      res.render("plan/schedule", { title: title, schedule: result });
+      try {
+        res.render("plan/Schedule", { title: title, schedule: result });
+      } catch (err) {
+        console.log(err);
+      }
     });
   });
   return router;
