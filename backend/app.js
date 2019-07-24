@@ -71,6 +71,7 @@ connectDB = () => {
 
     const PlanSchema = Schema({
       title: String,
+      date: { type: Date, default: Date.now },
       Schedules: [{ type: Schema.Types.ObjectId, ref: "Schedule" }]
     });
 
@@ -227,6 +228,17 @@ app.get("/myPlans", (req, res) => {
     } catch (err) {
       console.log(err);
     }
+  });
+});
+
+app.get("/myPlans/schedule", (req, res) => {
+  console.log("get(myplans/schedule) 요청됨.");
+
+  databaseUtil.getSchedule(database, "test", (err, result) => {
+    if (err) console.log(err);
+    console.log(result);
+
+    res.render("plan/schedule", { title: "test", schedule: result });
   });
 });
 

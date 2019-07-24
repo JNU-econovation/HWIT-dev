@@ -23,8 +23,10 @@
                         <tr>
                         <th scope="row" colspan="1"><%= i+1 %></th>
                         <td colspan="3"><%= plans[i].title %></td> 
-                        <td colspan="1">.</td>
-                        <td colspan="1"><input type = 'button' value ='스케줄보기' onclick='alert("클릭됨")'></td>
+                        <td colspan="1"><%= plans[i].date %></td>
+                        <td colspan="1">
+                          <button type = 'button' class = "btn btn-outline-info" onClick='openPop()'>보기</button>
+                        </td> 
                         </tr>
                         <% } %> 
                 </tbody>
@@ -32,4 +34,11 @@
       </div>
     </section>
   </body>
+  <script>
+      function openPop(title) {
+        var pop_title = "스케줄표";
+        window.open("/myplans/schedule?title="+title, pop_title, "width=1000, height=800");
+
+      }
+  </script>
 </html>

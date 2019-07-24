@@ -40,21 +40,17 @@ module.exports = app => {
       res.redirect("/");
     }
   });
-  
+
   router.get("/myplan", (req, res) => {
     console.log("get(/myplan)요청 실행");
 
     if (req.session.user) {
-<<<<<<< HEAD
       res.render("plan/myplan", (err, data) => {
         if (err) throw err;
 
         res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
         res.end(data);
       });
-=======
-      res.render("plan/myplan");
->>>>>>> 7688531f69e1fc8143b027ce1b87379a80d2f5e6
     } else {
       res.redirect("/");
     }

@@ -94,3 +94,15 @@ exports.getPlans = (database, email, callback) => {
       callback(null, data.Plans);
     });
 };
+
+exports.getSchedule = (database, plan, callback) => {
+  console.log("getSchedule 요청됨");
+
+  PlanModel.findOne({ title: plan })
+    .populate("Schedules")
+    .exec((err, data) => {
+      if (err) callback(err, null);
+
+      callback(null, data.Schedules);
+    });
+};
