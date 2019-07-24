@@ -127,10 +127,27 @@ function makeCheckSchedule(){
 */
       //var trainAPI = require("../backend/TrainApi.js");
       var destination = [];
+      var travelRoute = [];
+
       function insertDestination(stationInfo) {
         destination.push(stationInfo);
+        travelRoute.push(stationInfo.location);
+        if(travelRoute.length > 1){
+            createUserRoute(travelRoute);
+        } 
         alert(stationInfo.stationname + "역이 추가되었습니다.");
       }
+        
+      var userRoute = [];    
+      function createUserRoute(travelRoute){
+        userRoute = new naver.maps.Polyline({
+        map: map,
+        path: travelRoute,
+        strokeColor: "#C00000",
+        strokeWeight: 6
+      });
+      }
+    
       /*    
 function checkSchedule(destination){
     trainAPI(destination[0].cityname, destination[0].stationname,destination[1].cityname,destination[1].stationname,"20161001", "00", x=>{
@@ -577,8 +594,8 @@ naver.maps.Event.addListener(map, 'click', function(e) {
           position: seoulStation
         });
 
-      var seoulInfo = { cityname: "서울특별시", stationname: "서울" };
-      var daejeonInfo = { cityname: "대전광역시", stationname: "대전" };
+      var seoulInfo = { cityname: "서울특별시", stationname: "서울", location :{ x: 126.9706964, y: 37.5540723, _lat: 37.5540723, _lng: 126.9706964 } };
+      var daejeonInfo = { cityname: "대전광역시", stationname: "대전", location : { x: 127.4342007, y: 36.3323429, _lat: 36.3323429, _lng: 127.4342007 } };
 
       var daejeonStation = new naver.maps.LatLng(36.3323429, 127.4342007),
         marker2 = new naver.maps.Marker({
@@ -661,7 +678,7 @@ naver.maps.Event.addListener(map, 'click', function(e) {
           position: gwangjuStation
         });
 
-      var gwangjuInfo = { cityname: "광주광역시", stationname: "광주" };
+      var gwangjuInfo = { cityname: "광주광역시", stationname: "광주", location :{x: 126.7907872, y: 35.1377629, _lat: 35.1377629, _lng: 126.7907872} };
 
       var contentString3 = [
         '<div class="iw_inner">',
@@ -705,7 +722,7 @@ naver.maps.Event.addListener(map, 'click', function(e) {
           position: busanStation
         });
 
-      var busanInfo = { cityname: "부산광역시", stationname: "부산" };
+      var busanInfo = { cityname: "부산광역시", stationname: "부산", location : {x: 129.042209, y: 35.1151987, _lat: 35.1151987, _lng: 129.042209} };
 
       var contentString4 = [
         '<div class="iw_inner">',
@@ -748,7 +765,7 @@ naver.maps.Event.addListener(map, 'click', function(e) {
           position: jeonjuStation
         });
 
-      var jeonjuInfo = { cityname: "전라북도", stationname: "전주" };
+      var jeonjuInfo = { cityname: "전라북도", stationname: "전주", location : {y: 35.8498671, _lat: 35.8498671, x: 127.1618098, _lng: 127.1618098} };
 
       var contentString5 = [
         '<div class="iw_inner">',
