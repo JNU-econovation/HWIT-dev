@@ -22,10 +22,10 @@
                         <% for(var i=0; i<plans.length; i++) {%> 
                         <tr>
                         <th scope="row" colspan="1"><%= i+1 %></th>
-                        <td colspan="3"><%= plans[i].title %></td> 
+                        <td colspan="3" class="<%= i %>"><%= plans[i].title %></td> 
                         <td colspan="1"><%= plans[i].date %></td>
                         <td colspan="1">
-                          <button type = 'button' class = "btn btn-outline-info" onClick='openPop()'>보기</button>
+                          <button type = 'button' class = "btn btn-outline-info" onClick = openPop(<%= i %>)>보기</button>
                         </td> 
                         </tr>
                         <% } %> 
@@ -35,7 +35,9 @@
     </section>
   </body>
   <script>
-      function openPop(title) {
+      function openPop(i) {
+        var title = document.getElementsByClassName(String(i))[0].innerHTML;
+        alert(title);
         var pop_title = "스케줄표";
         window.open("/myplans/schedule?title="+title, pop_title, "width=1000, height=800");
 
