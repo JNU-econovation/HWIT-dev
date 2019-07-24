@@ -40,7 +40,7 @@ module.exports = app => {
       res.redirect("/");
     }
   });
-  
+
   router.get("/myplan", (req, res) => {
     console.log("get(/myplan)요청 실행");
 

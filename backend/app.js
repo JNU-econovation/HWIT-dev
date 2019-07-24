@@ -15,10 +15,10 @@ const methodOverride = require("method-override");
 var database;
 
 // //변수
-const Schema = mongoose.Schema;
 const app = express();
 const databaseUrl =
   "mongodb+srv://hwit:ecnv2019@cluster0-qvtb7.mongodb.net/test?retryWrites=true&w=majority";
+const Schema = require("./util/schema.js");
 var databaseUtil = require("./util/database.js");
 
 //설정
@@ -61,32 +61,7 @@ connectDB = () => {
 
   database.on("open", () => {
     console.log("데이터베이스에 연결됨: " + databaseUrl);
-
-    const UserSchema = Schema({
-      email: String,
-      password: String,
-      repassword: String,
-      Plans: [{ type: Schema.Types.ObjectId, ref: "Plan" }]
-    });
-
-    const PlanSchema = Schema({
-      title: String,
-      Schedules: [{ type: Schema.Types.ObjectId, ref: "Schedule" }]
-    });
-
-    const ScheduleSchema = Schema({
-      depplacename: String,
-      arrplacename: String,
-      depplandtime: String,
-      arrplandtime: String,
-      traingradename: String
-    });
-
-    console.log("UserSchema 정의함. ");
-    ScheduleModel = mongoose.model("Schedule", ScheduleSchema);
-    UserModel = mongoose.model("touser", UserSchema);
-    PlanModel = mongoose.model("Plan", PlanSchema);
-    console.log("UserModel 정의함. ");
+    Schema.defineSchema();
   });
 
   database.on("disconnected", () => {
@@ -227,6 +202,17 @@ app.get("/myPlans", (req, res) => {
     } catch (err) {
       console.log(err);
     }
+  });
+});
+
+app.get("/myPlans/schedule", (req, res) => {
+  console.log("get(myplans/schedule) 요청됨.");
+  var title = req.body.title || req.query.title;
+
+  databaseUtil.getSchedule(database, title, (err, result) => {
+    if (err) console.log(err);
+
+    res.render("plan/schedule", { title: title, schedule: result });
   });
 });
 
