@@ -9,29 +9,72 @@
     />
     <title>스케줄 계획하기</title>
     <!--<script type="text/javascript" src="../backend/TrainApi.js"></script>-->
-    <script
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/plan.css" />
+      <script
       type="text/javascript"
       src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=q00pdb683n"
     ></script>
+      <style type="text/css">
+      #wrapper{
+        width : 500px;
+        margin : 0 auto;
+      }
+      </style>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">Home</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      ></button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/plan">Plan <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">MyPlans</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/process/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav> 
+    <br><br>
     <div id="wrap" class="section">
-      <h2>일정 계획하기</h2>
-      <p>
-        여행지를 선택하고 스케줄보기를 클릭하세요.
+      <h2 id = 'wrapper' align ='center'>일정 계획하기</h2>
+      <br><br>
+      <p align = 'center' style="font-size : 20px; font-weight: bold">
+        원하는 여행지를 선택하고 '여행지 선택완료' 버튼을 클릭하세요. -> 
         <input
           type="button"
           id="schedule"
-          value="여행지설정완료"
+          value="여행지 설정완료"
           onclick="changeSchedule(destination)"
         />
         <!--<script src = "../backend/TrainApi.js"></script>-->
       </p>
       <div id="map" style="width:100%;height:600px;"></div>
     </div>
-
+    <br>
     <div id="table">
-      <form name="frmData" id="frmData" method="post" id="myForm">
+      <form align = 'center' name="frmData" id="frmData" method="post" id="myForm"> 
+        <fieldset><legend>첫번째 일정</legend>
         <label for="departureLocation">출발지</label>
 
         <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
@@ -53,9 +96,36 @@
         <input type="date" name="date" id="date" />
 
         <!-- <button type="submit">스케줄 확인</button> -->
+        <button onClick="openPop();">팝업창으로 POST 전송!!</button>
+        </fieldset>    
       </form>
+      <br>
+      <form align = 'center' name="frmData" id="frmData" method="post" id="myForm">
+        <fieldset><legend>첫번째 일정</legend>  
+        <label for="departureLocation">출발지</label>
 
-      <button onClick="openPop();">팝업창으로 POST 전송!!</button>
+        <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
+
+        <label for="departureStation">출발역</label>
+
+        <input type="text" name="departureStation" id="departureStation" value="서울" />
+
+        <label for="arrivalLocation">도착지</label>
+
+        <input type="text" name="arrivalLocation" id="arrivalLocation" value="대전광역시" />
+
+        <label for="arrivalStation">도착역</label>
+
+        <input type="text" name="arrivalStation" id="arrivalStation" value="대전" />
+
+        <label for="date">날짜</label>
+
+        <input type="date" name="date" id="date" />
+
+        <!-- <button type="submit">스케줄 확인</button> -->
+        <button onClick="openPop();">팝업창으로 POST 전송!!</button> 
+          </fieldset>    
+      </form>
     </div>
     <script>
       function openPop() {
@@ -74,28 +144,28 @@
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =
-            "<form action='checkSchedule' method='post' id='myForm'>" +
-            " <label for='departureLocation'>출발지역</label>" +
+            "<form align = 'center' action='checkSchedule' method='post' id='myForm'>" +
+            " <label for='departureLocation'> 출발지역 </label>" +
             "<input type='text' name='departureLocation' id='departureLocation' value=" +
             destination[i].cityname +
               
             ">" +
-            "<label for='departureStation'>출발역</label>" +
+            "<label for='departureStation'> 출발역 </label>" +
             "<input type='text' name='departureStation' id='departureStation' value=" +
             destination[i].stationname +
             ">" +
-            "<label for='arrivalLocation'>도착지역</label>" +
+            "<label for='arrivalLocation'> 도착지역 </label>" +
             "<input type='text' name='arrivalLocation' id='arrivalLocation' value=" +
             destination[i + 1].cityname +
             ">" +
-            "<label for='arrivalStation'>도착역</label>" +
+            "<label for='arrivalStation'> 도착역 </label>" +
             "<input type='text' name='arrivalStation' id='arrivalStation' value=" +
             destination[i + 1].stationname +
             ">" +
-            "<label for='date'>날짜</label>" +
+            "<label for='date'> 날짜 </label>" +
             "<input type='date' name='date' id='date'>" +
             "<button type='submit'>스케줄 확인</button>" +
-            "</form>";
+            "</form><br>";
           var plain = document.getElementById("table");
           plain.innerHTML = plain.innerHTML + travel;
         }
