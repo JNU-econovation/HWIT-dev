@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body >
+    <% include ../partials/nav %>
+
+    <section style="width: 100%; height:800px; text-align: center; float: center;">
+      <h1 style="margin-top: 80px">나의 계획들</h1>
+      <div class="layer">
+            <table class="table table-striped" style="margin-top: 50px">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="1">No.</th>
+                        <th scope="col" colspan="3">계획명</th>
+                        <th scope="col" colspan="1">작성 날짜</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<plans.length; i++) {%> 
+                        <tr>
+                        <th scope="row" colspan="1"><%= i+1 %></th>
+                        <td colspan="3"><%= plans[i].title %></td> 
+                        <td colspan="1">.</td>
+                        </tr>
+                        <% } %> 
+                    </tbody>
+             </table>
+      </div>
+    </section>
+  </body>
+</html>
