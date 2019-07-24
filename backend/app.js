@@ -216,6 +216,20 @@ app.post("/process/adduser", (req, res) => {
   }
 });
 
+app.get("/myPlans", (req, res) => {
+  console.log("get(myplan) 요청됨.");
+
+  databaseUtil.getPlans(database, "please@co.kr", (err, result) => {
+    if (err) console.log(err);
+    console.log(result);
+    try {
+      res.render("plan/MyPlans", { plans: result });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+});
+
 //에러 처리
 var errorHandler = expressErrorHandler({
   static: {
