@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app, database) => {
   //함수로 만들어 객체 app을 전달받음
   const express = require("express");
   const fs = require("fs");

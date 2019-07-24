@@ -47,10 +47,9 @@ app.use(
 );
 
 //get, post
-var page = require("./router/page.js")(app);
-var processPage = require("./router/process.js")(app);
-app.use("/", page);
-app.use("/process", processPage);
+app.use("/", require("./router/page.js")(app));
+app.use("/process", require("./router/process.js")(app, database));
+app.use("/myPlans", require("./router/myplan.js")(app, database));
 
 //데이터베이스에 연결
 connectDB = () => {
@@ -105,54 +104,6 @@ app.post("/process/login", (req, res) => {
   }
 });
 
-app.get("/process/schedule/save", (req, res) => {
-  console.log("get(process/schedule/save)요청 실행됨");
-
-  const title = req.session.title;
-
-  const depplacename = req.query.depplacename;
-  const arrplacename = req.query.arrplacename;
-  const depplandtime = req.query.depplandtime;
-  const arrplandtime = req.query.arrplandtime;
-  const traingradename = req.query.traingradename;
-
-  console.log(
-    title + " : " + depplacename + "/" + arrplacename + "/" + depplandtime + "/" + arrplandtime
-  );
-  databaseUtil.addSchedule(
-    database,
-    title,
-    depplacename,
-    arrplacename,
-    depplandtime,
-    arrplandtime,
-    traingradename
-  );
-  fs.readFile("./frontend/close.html", (err, data) => {
-    if (err) throw err;
-
-    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-    res.end(data);
-  });
-});
-
-app.get("/process/plan", (req, res) => {
-  console.log("get(/process/plan)요청 실행");
-
-  const title = req.query.title;
-  console.log("계획 제목 : " + title);
-  req.session.title = title;
-
-  //plan db 저장
-  databaseUtil.addPlan(database, req.session.user, title);
-  fs.readFile("./frontend/polylineEX.html", (err, data) => {
-    if (err) throw err;
-
-    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-    res.end(data);
-  });
-});
-
 app.post("/process/adduser", (req, res) => {
   console.log("/process/adduser 라우팅 함수 호출됨.");
 
@@ -189,31 +140,6 @@ app.post("/process/adduser", (req, res) => {
     res.write("<h1>데이터베이스 연결 안됨.</h1>");
     res.end();
   }
-});
-
-app.get("/myPlans", (req, res) => {
-  console.log("get(myplan) 요청됨.");
-
-  databaseUtil.getPlans(database, "please@co.kr", (err, result) => {
-    if (err) console.log(err);
-    console.log(result);
-    try {
-      res.render("plan/MyPlans", { plans: result });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-});
-
-app.get("/myPlans/schedule", (req, res) => {
-  console.log("get(myplans/schedule) 요청됨.");
-  var title = req.body.title || req.query.title;
-
-  databaseUtil.getSchedule(database, title, (err, result) => {
-    if (err) console.log(err);
-
-    res.render("plan/schedule", { title: title, schedule: result });
-  });
 });
 
 //에러 처리
