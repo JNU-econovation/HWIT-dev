@@ -32,10 +32,10 @@ module.exports = (app, database) => {
   });
 
   router.get("/post", (req, res) => {
-    console.log("get(/posts)요청 실행");
+    console.log("get(/post)요청 실행");
 
     if (req.session.user) {
-      res.render("posts/index");
+      res.render("post/index");
     } else {
       res.redirect("/");
     }
