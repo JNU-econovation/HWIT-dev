@@ -1,0 +1,19 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: table;
+  margin: 0 auto;
+}
+
+strong {
+  font-size: 30px;
+}
+.container {
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}

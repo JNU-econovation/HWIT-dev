@@ -1,4 +1,4 @@
-module.exports = (app, database) => {
+module.exports = app => {
   //함수로 만들어 객체 app을 전달받음
   const express = require("express");
   const fs = require("fs");
@@ -27,7 +27,7 @@ module.exports = (app, database) => {
         res.end(data);
       });
     } else {
-      res.redirect("/");
+      res.redirect("/forlogin");
     }
   });
 
@@ -37,7 +37,7 @@ module.exports = (app, database) => {
     if (req.session.user) {
       res.render("post/index");
     } else {
-      res.redirect("/");
+      res.redirect("/forlogin");
     }
   });
 
@@ -52,9 +52,19 @@ module.exports = (app, database) => {
         res.end(data);
       });
     } else {
-      res.redirect("/");
+      res.redirect("/forlogin");
     }
   });
 
+  router.get("/forlogin", (req, res) => {
+    console.log("get(/forlogin)요청 실행");
+
+    fs.readFile("./frontend/ForLogin.html", (err, data) => {
+      if (err) throw err;
+
+      res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+      res.end(data);
+    });
+  });
   return router;
 };

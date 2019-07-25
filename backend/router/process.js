@@ -8,6 +8,10 @@ module.exports = (app, database) => {
   router.get("/plan", (req, res) => {
     console.log("get(/process/plan)요청 실행");
 
+    if (!req.session.user) {
+      res.redirect("/forlogin");
+    }
+
     const title = req.query.title;
     console.log("계획 제목 : " + title);
     req.session.title = title;
@@ -62,6 +66,10 @@ module.exports = (app, database) => {
 
   router.post("/schedule", (req, res) => {
     console.log("post(/process/plan/schedule)요청 실행");
+
+    if (!req.session.user) {
+      res.redirect("/forlogin");
+    }
     const TrainApi = require("../api/TrainApi.js");
     const apihtml = require("../util/schedule.js");
     const dateUtil = require("../util/date.js");
@@ -113,6 +121,10 @@ module.exports = (app, database) => {
 
   router.get("/schedule/save", (req, res) => {
     console.log("get(process/schedule/save)요청 실행됨");
+
+    if (!req.session.user) {
+      res.redirect("/forlogin");
+    }
 
     const title = req.session.title;
 
