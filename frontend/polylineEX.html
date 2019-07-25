@@ -65,11 +65,12 @@
       <h2 id="wrapper" align="center">일정 계획하기</h2>
       <br /><br />
       <p align="center" style="font-size : 20px; font-weight: bold">
-        원하는 여행지를 선택하고 '여행지 선택완료' 버튼을 클릭하세요. ->
+        원하는 여행지를 선택하고 '여행지 선택완료' 버튼을 클릭하세요. &nbsp;->&nbsp;
         <input
           type="button"
           id="schedule"
           value="여행지 설정완료"
+          class="btn btn-info"
           onclick="changeSchedule(destination)"
         />
         <!--<script src = "../backend/TrainApi.js"></script>-->
@@ -79,34 +80,6 @@
     <br />
 
     <div id="table">
-      <form align="center" name="frmData" id="frmData" method="post" id="myForm">
-        <fieldset>
-          <legend>첫번째 일정</legend>
-          <label for="departureLocation">출발지</label>
-
-          <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
-
-          <label for="departureStation">출발역</label>
-
-          <input type="text" name="departureStation" id="departureStation" value="서울" />
-
-          <label for="arrivalLocation">도착지</label>
-
-          <input type="text" name="arrivalLocation" id="arrivalLocation" value="대전광역시" />
-
-          <label for="arrivalStation">도착역</label>
-
-          <input type="text" name="arrivalStation" id="arrivalStation" value="대전" />
-
-          <label for="date">날짜</label>
-
-          <input type="date" name="date" id="date" />
-
-          <!-- <button type="submit">스케줄 확인</button> -->
-          <button onClick="openPop();">팝업창으로 POST 전송!!</button>
-        </fieldset>
-      </form>
-      <br />
       <form align="center" name="frmData" id="frmData" method="post" id="myForm">
         <fieldset>
           <legend>첫번째 일정</legend>
@@ -130,7 +103,7 @@
           <input type="date" name="date" id="date" />
 
           <!-- <button type="submit">스케줄 확인</button>  -->
-          <button onClick="openPop();">팝업창으로 POST 전송!!</button>
+          <button onClick="openPop();" class="btn btn-success">팝업창으로 POST 전송!!</button>
         </fieldset>
       </form>
     </div>
@@ -154,25 +127,25 @@
           var travel =
             "<form align = 'center' action='checkSchedule' method='post' id='myForm'><fieldset><legend>" +
             (i + 1) +
-            "번째 일정</legend><label for='departureLocation'> 출발지역 </label>" +
+            "번째 일정</legend><label for='departureLocation'> 출발지역 &nbsp;</label>" +
             "<input type='text' name='departureLocation' id='departureLocation' value=" +
             destination[i].cityname +
             ">" +
-            "<label for='departureStation'> 출발역 </label>" +
+            "<label for='departureStation'>&nbsp; 출발역 &nbsp;</label>" +
             "<input type='text' name='departureStation' id='departureStation' value=" +
             destination[i].stationname +
             ">" +
-            "<label for='arrivalLocation'> 도착지역 </label>" +
+            "<label for='arrivalLocation'> &nbsp;도착지역 &nbsp;</label>" +
             "<input type='text' name='arrivalLocation' id='arrivalLocation' value=" +
             destination[i + 1].cityname +
             ">" +
-            "<label for='arrivalStation'> 도착역 </label>" +
+            "<label for='arrivalStation'>&nbsp; 도착역 &nbsp;</label>" +
             "<input type='text' name='arrivalStation' id='arrivalStation' value=" +
             destination[i + 1].stationname +
             ">" +
-            "<label for='date'> 날짜 </label>" +
-            "<input type='date' name='date' id='date'>" +
-            "<button type='submit'>스케줄 확인</button>" +
+            "<label for='date'> &nbsp;날짜 &nbsp;</label>" +
+            "<input type='date' name='date' id='date'>&nbsp;" +
+            "<button type='submit' class='btn btn-success'>스케줄 확인</button>" +
             "</fieldset></form><br>";
           var plain = document.getElementById("table");
           plain.innerHTML = plain.innerHTML + travel;
@@ -690,9 +663,9 @@ naver.maps.Event.addListener(map, 'click', function(e) {
         });
 
       var contentString = [
-        '<div class="iw_inner">',
-        "   <h3>서울역</h3>",
-        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(seoulInfo)">',
+        '<div class="iw_inner" style="text-align:center">',
+        "   <h4>서울역</h4>",
+        '   <input type = "button" class="btn btn-outline-primary" value = "여행지추가" onclick = "insertDestination(seoulInfo)">',
         /*
         '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
         '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
@@ -704,9 +677,9 @@ naver.maps.Event.addListener(map, 'click', function(e) {
       ].join("");
 
       var contentString2 = [
-        '<div class="iw_inner">',
-        "   <h3>대전역</h3>",
-        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(daejeonInfo)">',
+        '<div class="iw_inner" style="text-align:center">',
+        "   <h4>대전역</h4>",
+        '   <input type = "button" class="btn btn-outline-primary" value = "여행지추가" onclick = "insertDestination(daejeonInfo)">',
         /*
         '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
         '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
@@ -771,9 +744,9 @@ naver.maps.Event.addListener(map, 'click', function(e) {
       };
 
       var contentString3 = [
-        '<div class="iw_inner">',
-        "   <h3>광주역</h3>",
-        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(gwangjuInfo)">',
+        '<div class="iw_inner" style="text-align:center">',
+        "   <h4>광주역</h4>",
+        '   <input type = "button" value = "여행지추가" class="btn btn-outline-primary" onclick = "insertDestination(gwangjuInfo)">',
         /*
         '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
         '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
@@ -819,9 +792,9 @@ naver.maps.Event.addListener(map, 'click', function(e) {
       };
 
       var contentString4 = [
-        '<div class="iw_inner">',
-        "   <h3>부산역</h3>",
-        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(busanInfo)">',
+        '<div class="iw_inner" style="text-align:center">',
+        "   <h4>부산역</h4>",
+        '   <input type = "button" value = "여행지추가" class="btn btn-outline-primary" onclick = "insertDestination(busanInfo)">',
         /*
         '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
         '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
@@ -866,9 +839,9 @@ naver.maps.Event.addListener(map, 'click', function(e) {
       };
 
       var contentString5 = [
-        '<div class="iw_inner">',
+        '<div class="iw_inner" style="text-align:center">',
         "   <h3>전주역</h3>",
-        '   <input type = "button" value = "여행지추가" onclick = "insertDestination(jeonjuInfo)">',
+        '   <input type = "button" value = "여행지추가" class="btn btn-outline-primary" onclick = "insertDestination(jeonjuInfo)">',
         /*
         '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
         '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
