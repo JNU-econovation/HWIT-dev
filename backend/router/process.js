@@ -10,6 +10,7 @@ module.exports = (app, database) => {
 
     if (!req.session.user) {
       res.redirect("/forlogin");
+      return;
     }
 
     const title = req.query.title;
@@ -69,6 +70,7 @@ module.exports = (app, database) => {
 
     if (!req.session.user) {
       res.redirect("/forlogin");
+      return;
     }
     const TrainApi = require("../api/TrainApi.js");
     const apihtml = require("../util/schedule.js");
@@ -124,6 +126,7 @@ module.exports = (app, database) => {
 
     if (!req.session.user) {
       res.redirect("/forlogin");
+      return;
     }
 
     const title = req.session.title;

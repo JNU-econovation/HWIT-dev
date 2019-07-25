@@ -34,11 +34,11 @@ module.exports = app => {
   router.get("/post", (req, res) => {
     console.log("get(/post)요청 실행");
 
-    if (req.session.user) {
-      res.render("post/index");
-    } else {
-      res.redirect("/forlogin");
-    }
+    // if (req.session.user) {
+    res.render("post/index"); //게시판 모두 접근 가능한지 궁금합니당.
+    // } else {
+    //   res.redirect("/forlogin");
+    // }
   });
 
   router.get("/myplan", (req, res) => {

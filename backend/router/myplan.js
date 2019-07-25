@@ -7,7 +7,13 @@ module.exports = (app, database) => {
   router.get("/", (req, res) => {
     console.log("get(myplan) 요청됨.");
 
-    databaseUtil.getPlans(database, "please@co.kr", (err, result) => {
+    const user = req.session.user;
+    if (!user) {
+      res.redirect("/forlogin");
+      return;
+    }
+
+    databaseUtil.getPlans(database, user, (err, result) => {
       if (err) console.log(err);
       //console.log(result);
       try {
@@ -21,6 +27,11 @@ module.exports = (app, database) => {
   router.get("/schedule", (req, res) => {
     console.log("get(myplans/schedule) 요청됨.");
     var title = req.body.title || req.query.title;
+
+    if (!req.session.user) {
+      res.redirect("/forlogin");
+      return;
+    }
 
     databaseUtil.getSchedule(database, title, (err, result) => {
       if (err) console.log(err);
