@@ -1,19 +1,18 @@
 body {
   background: whitesmoke;
 }
-.layer {
-  position: absolute;
+section .layer {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 40%;
   text-align: center;
 }
-.layer .content {
+section .layer .content {
   display: inline-block;
   vertical-align: middle;
 }
-.layer .blank {
+section .layer .blank {
   display: inline-block;
   width: 0;
   height: 100%;
