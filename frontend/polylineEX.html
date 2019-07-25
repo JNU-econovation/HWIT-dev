@@ -72,11 +72,12 @@
       <div id="map" style="width:100%;height:600px;"></div>
     </div>
     <br>
+    
     <div id="table">
-      <form align = 'center' name="frmData" id="frmData" method="post" id="myForm"> 
+      <form align = 'center' name="frmData" id="frmData" method="post" id="myForm">
         <fieldset><legend>첫번째 일정</legend>
         <label for="departureLocation">출발지</label>
-
+        
         <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
 
         <label for="departureStation">출발역</label>
@@ -103,7 +104,6 @@
       <form align = 'center' name="frmData" id="frmData" method="post" id="myForm">
         <fieldset><legend>첫번째 일정</legend>  
         <label for="departureLocation">출발지</label>
-
         <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
 
         <label for="departureStation">출발역</label>
@@ -122,11 +122,12 @@
 
         <input type="date" name="date" id="date" />
 
-        <!-- <button type="submit">스케줄 확인</button> -->
+        <!-- <button type="submit">스케줄 확인</button>  -->
         <button onClick="openPop();">팝업창으로 POST 전송!!</button> 
-          </fieldset>    
+          </fieldset>
       </form>
     </div>
+
     <script>
       function openPop() {
         var pop_title = "스케줄표";
@@ -144,8 +145,8 @@
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =
-            "<form align = 'center' action='checkSchedule' method='post' id='myForm'>" +
-            " <label for='departureLocation'> 출발지역 </label>" +
+            "<form align = 'center' action='checkSchedule' method='post' id='myForm'><fieldset><legend>" +(i+1)+
+            "번째 일정</legend><label for='departureLocation'> 출발지역 </label>" +
             "<input type='text' name='departureLocation' id='departureLocation' value=" +
             destination[i].cityname +
               
@@ -165,7 +166,7 @@
             "<label for='date'> 날짜 </label>" +
             "<input type='date' name='date' id='date'>" +
             "<button type='submit'>스케줄 확인</button>" +
-            "</form><br>";
+            "</fieldset></form><br>";
           var plain = document.getElementById("table");
           plain.innerHTML = plain.innerHTML + travel;
         }
