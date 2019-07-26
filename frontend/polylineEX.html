@@ -125,7 +125,9 @@
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =
-            "<form align='center' name='frmData' id='frmData' method='post' id='myForm'><fieldset><legend>" +
+            "<form align='center' name='frmData" +
+            i +
+            "' id='frmData' method='post' id='myForm'><fieldset><legend>" +
             (i + 1) +
             "번째 일정</legend><label for='departureLocation'> 출발지역 &nbsp;</label>" +
             "<input type='text' name='departureLocation' id='departureLocation' value=" +
