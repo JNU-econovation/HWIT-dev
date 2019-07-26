@@ -118,30 +118,28 @@
 
         frmData.submit();
       }
-      function showPopup() {
-        window.open("/process/schedule", "a", "width=400, height=300, left=100, top=50");
-      }
+
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =
             "<form align='center' name='frmData' id='frmData' method='post' id='myForm'><fieldset><legend>" +
             (i + 1) +
             "번째 일정</legend><label for='departureLocation'> 출발지역 &nbsp;</label>" +
-            "<input type='text' name='departureLocation' id='departureLocation' value=" +
+            "<input type='text' name='departureLocation' id='departureLocation' value='" +
             destination[i].cityname +
-            ">" +
+            "'>" +
             "<label for='departureStation'>&nbsp; 출발역 &nbsp;</label>" +
-            "<input type='text' name='departureStation' id='departureStation' value=" +
+            "<input type='text' name='departureStation' id='departureStation' value='" +
             destination[i].stationname +
-            ">" +
+            "'>" +
             "<label for='arrivalLocation'> &nbsp;도착지역 &nbsp;</label>" +
-            "<input type='text' name='arrivalLocation' id='arrivalLocation' value=" +
+            "<input type='text' name='arrivalLocation' id='arrivalLocation' value='" +
             destination[i + 1].cityname +
-            ">" +
+            "'>" +
             "<label for='arrivalStation'>&nbsp; 도착역 &nbsp;</label>" +
-            "<input type='text' name='arrivalStation' id='arrivalStation' value=" +
+            "<input type='text' name='arrivalStation' id='arrivalStation' value='" +
             destination[i + 1].stationname +
-            ">" +
+            "'>" +
             "<label for='date'> &nbsp;날짜 &nbsp;</label>" +
             "<input type='date' name='date' id='date'>&nbsp;" +
             "<button onClick='openPop();' class='btn btn-success'>스케줄 확인</button>" +
