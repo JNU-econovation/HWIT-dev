@@ -80,7 +80,7 @@
     <br />
 
     <div id="table">
-      <form align="center" name="frmData" id="frmData" method="post" id="myForm">
+      <!-- <form align="center" name="frmData" id="frmData" method="post" id="myForm">
         <fieldset>
           <legend>첫번째 일정</legend>
           <label for="departureLocation">출발지</label>
@@ -102,10 +102,10 @@
 
           <input type="date" name="date" id="date" />
 
-          <!-- <button type="submit">스케줄 확인</button>  -->
+          
           <button onClick="openPop();" class="btn btn-success">팝업창으로 POST 전송!!</button>
         </fieldset>
-      </form>
+      </form> -->
     </div>
 
     <script>
@@ -145,7 +145,7 @@
             ">" +
             "<label for='date'> &nbsp;날짜 &nbsp;</label>" +
             "<input type='date' name='date' id='date'>&nbsp;" +
-            "<button type='submit' class='btn btn-success'>스케줄 확인</button>" +
+            "<button type='submit' onClick='openPop();' class='btn btn-success'>스케줄 확인</button>" +
             "</fieldset></form><br>";
           var plain = document.getElementById("table");
           plain.innerHTML = plain.innerHTML + travel;
