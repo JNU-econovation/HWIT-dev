@@ -76,8 +76,6 @@ module.exports = (app, database) => {
     const apihtml = require("../util/schedule.js");
     const dateUtil = require("../util/date.js");
 
-    console.log("Test");
-
     let departureLocation = req.body.departureLocation;
     let departureStation = req.body.departureStation;
     let arrivalLocation = req.body.arrivalLocation;
