@@ -80,7 +80,7 @@
     <br />
 
     <div id="table">
-      <!-- <form align="center" name="frmData" id="frmData" method="post" id="myForm">
+      <form align="center" name="frmData" id="frmData" method="post" id="myForm">
         <fieldset>
           <legend>첫번째 일정</legend>
           <label for="departureLocation">출발지</label>
@@ -102,10 +102,9 @@
 
           <input type="date" name="date" id="date" />
 
-          
           <button onClick="openPop();" class="btn btn-success">팝업창으로 POST 전송!!</button>
         </fieldset>
-      </form> -->
+      </form>
     </div>
 
     <script>
@@ -125,9 +124,7 @@
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =
-            "<form align='center' name='frmData" +
-            i +
-            "' id='frmData' method='post' id='myForm'><fieldset><legend>" +
+            "<form align='center' name='frmData' id='frmData' method='post' id='myForm'><fieldset><legend>" +
             (i + 1) +
             "번째 일정</legend><label for='departureLocation'> 출발지역 &nbsp;</label>" +
             "<input type='text' name='departureLocation' id='departureLocation' value=" +
@@ -147,7 +144,7 @@
             ">" +
             "<label for='date'> &nbsp;날짜 &nbsp;</label>" +
             "<input type='date' name='date' id='date'>&nbsp;" +
-            "<button type='submit' onClick='openPop();' class='btn btn-success'>스케줄 확인</button>" +
+            "<button onClick='openPop();' class='btn btn-success'>스케줄 확인</button>" +
             "</fieldset></form><br>";
           var plain = document.getElementById("table");
           plain.innerHTML = plain.innerHTML + travel;
