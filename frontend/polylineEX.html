@@ -126,7 +126,7 @@
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =
-            "<form align='center' name='myform' method='post' action='/process/schedule' id='myForm'><fieldset><legend>" +
+            "<form align='center' name='myform' method='post'  id='myForm'><fieldset><legend>" +
             (i + 1) +
             "번째 일정</legend><label for='departureLocation'> 출발지역 &nbsp;</label>" +
             "<input type='text' name='departureLocation' id='departureLocation' value='" +
@@ -151,7 +151,7 @@
             name="subpopup"
             value="Submit in Popup"
             onclick="myForm.target='POPUPW'; POPUPW = window.open(
-          'about:blank','POPUPW','width=1000,height=800');"
+          '/process/schedule','POPUPW','width=1000,height=800');"
           />` +
             "</fieldset></form><br>";
           var plain = document.getElementById("table");
