@@ -46,7 +46,7 @@
             <a class="nav-link active" href="/plan">Plan</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/post">Post</a>
+            <a class="nav-link" href="/posts">Post</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/myplans">MyPlans</a>
@@ -80,7 +80,7 @@
     <br />
 
     <div id="table">
-      <!-- <form align="center" name="frmData" id="frmData" method="post" id="myForm">
+      <!-- <form align="center" name="myform" method="post" action="/process/schedule" id="myForm">
         <fieldset>
           <legend>첫번째 일정</legend>
           <label for="departureLocation">출발지</label>
@@ -101,81 +101,129 @@
           <label for="date">날짜</label>
 
           <input type="date" name="date" id="date" />
+          <input
+            type="submit"
+            name="subpopup"
+            class="btn btn-success"
+            value="스케줄 확인"
+            onclick="myForm.target='POPUPW'; POPUPW = window.open(
+          'about:blank','POPUPW','width=1000,height=800');"
+          />
+           <button onClick="openPop(1);" class="btn btn-success">팝업창으로 POST 전송!!</button> 
+        </fieldset> 
+      </form>
+      <form align="center" name="myform1" method="post" action="/process/schedule" id="myForm1">
+        <fieldset>
+          <legend>두번째 일정</legend>
+          <label for="departureLocation">출발지</label>
+          <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
 
-          
-          <button onClick="openPop();" class="btn btn-success">팝업창으로 POST 전송!!</button>
+          <label for="departureStation">출발역</label>
+
+          <input type="text" name="departureStation" id="departureStation" value="서울" />
+
+          <label for="arrivalLocation">도착지</label>
+
+          <input type="text" name="arrivalLocation" id="arrivalLocation" value="대전광역시" />
+
+          <label for="arrivalStation">도착역</label>
+
+          <input type="text" name="arrivalStation" id="arrivalStation" value="대전" />
+
+          <label for="date">날짜</label>
+
+          <input type="date" name="date" id="date" />
+          <input
+            type="submit"
+            name="subpopup"
+            class="btn btn-success"
+            value="스케줄 확인"
+            onclick="myForm1.target='POPUPW'; POPUPW = window.open(
+          'about:blank','POPUPW','width=1000,height=800');"
+          />
+           <button onClick="openPop(1);" class="btn btn-success">팝업창으로 POST 전송!!</button> -->
         </fieldset>
       </form> -->
     </div>
 
     <script>
-      function openPop() {
+      function openPop(i) {
         var pop_title = "스케줄표";
         window.open("/process/schedule", pop_title, "width=1000, height=800");
 
-        var frmData = document.frmData;
+        var frmData = document.getElementById("frmData" + i);
         frmData.target = pop_title;
-        frmData.action = "/process/schedule";
-
         frmData.submit();
       }
-      function showPopup() {
-        window.open("/process/schedule", "a", "width=400, height=300, left=100, top=50");
-      }
+
       function changeSchedule(destination) {
         for (var i = 0; i < destination.length - 1; i++) {
           var travel =
-            "<form align='center' name='frmData' id='frmData' method='post' id='myForm'><fieldset><legend>" +
+            "<form align='center' name='myform" +
+            i +
+            "' method='post' action='/process/schedule' id='myForm" +
+            i +
+            "'><fieldset><legend>" +
             (i + 1) +
             "번째 일정</legend><label for='departureLocation'> 출발지역 &nbsp;</label>" +
-            "<input type='text' name='departureLocation' id='departureLocation' value=" +
+            "<input type='text' name='departureLocation' id='departureLocation' value='" +
             destination[i].cityname +
-            ">" +
+            "'>" +
             "<label for='departureStation'>&nbsp; 출발역 &nbsp;</label>" +
-            "<input type='text' name='departureStation' id='departureStation' value=" +
+            "<input type='text' name='departureStation' id='departureStation' value='" +
             destination[i].stationname +
-            ">" +
+            "'>" +
             "<label for='arrivalLocation'> &nbsp;도착지역 &nbsp;</label>" +
-            "<input type='text' name='arrivalLocation' id='arrivalLocation' value=" +
+            "<input type='text' name='arrivalLocation' id='arrivalLocation' value='" +
             destination[i + 1].cityname +
-            ">" +
+            "'>" +
             "<label for='arrivalStation'>&nbsp; 도착역 &nbsp;</label>" +
-            "<input type='text' name='arrivalStation' id='arrivalStation' value=" +
+            "<input type='text' name='arrivalStation' id='arrivalStation' value='" +
             destination[i + 1].stationname +
-            ">" +
+            "'>" +
             "<label for='date'> &nbsp;날짜 &nbsp;</label>" +
             "<input type='date' name='date' id='date'>&nbsp;" +
-            "<button type='submit' onClick='openPop();' class='btn btn-success'>스케줄 확인</button>" +
+            `<input
+            type="submit"
+            name="subpopup"
+            class="btn btn-success"
+            value="스케줄 확인"
+            onclick="myForm` +
+            i +
+            `.target='POPUPW'; POPUPW = window.open(
+          'about:blank','POPUPW','width=1000,height=800');"
+          />` +
             "</fieldset></form><br>";
           var plain = document.getElementById("table");
           plain.innerHTML = plain.innerHTML + travel;
         }
       }
+
       /*
-function makeCheckSchedule(){
-   // for(var i = 0 ; i < destination.length-1 ; i++){
-        "<form action='checkSchedule' method='post' id='myForm'>"+" <label for='departureLocation'>출발지역</label>"+"<input type='text' name='departureLocation' id='departureLocation' value="+destination[i].cityname+">"+"<label for='departureStation'>출발역</label>"+"<input type='text' name='departureStation' id='departureStation' value="+destination[i].stationname+">"+"<label for='arrivalLocation'>도착지역</label>"+"<input type='text' name='arrivalLocation' id='arrivalLocation' value="+destination[i+1].cityname+">"+"<label for='arrivalStation'>도착역</label>"+"<input type='text' name='arrivalStation' id='arrivalStation' value="+destination[i+1].stationname+">"+"<label for='date'>날짜</label>"+"<input type='date' name='date' id='date'>"+"<button type='submit'>스케줄 확인</button>"+"</form>"
-    //}
-}
-*/
+      function makeCheckSchedule(){
+         // for(var i = 0 ; i < destination.length-1 ; i++){
+              "<form action='checkSchedule' method='post' id='myForm'>"+" <label for='departureLocation'>출발지역</label>"+"<input type='text' name='departureLocation' id='departureLocation' value="+destination[i].cityname+">"+"<label for='departureStation'>출발역</label>"+"<input type='text' name='departureStation' id='departureStation' value="+destination[i].stationname+">"+"<label for='arrivalLocation'>도착지역</label>"+"<input type='text' name='arrivalLocation' id='arrivalLocation' value="+destination[i+1].cityname+">"+"<label for='arrivalStation'>도착역</label>"+"<input type='text' name='arrivalStation' id='arrivalStation' value="+destination[i+1].stationname+">"+"<label for='date'>날짜</label>"+"<input type='date' name='date' id='date'>"+"<button type='submit'>스케줄 확인</button>"+"</form>"
+          //}
+      }
+      */
       /*function makeCheckSchedule(destination){
-    for(var i = 0 ; i < destination.length-1 ; i++){
-        document.write("<form action='checkSchedule' method='post' id='myForm'>");
-        document.write(" <label for='departureLocation'>출발지역</label>");
-        document.write("<input type='text' name='departureLocation' id='departureLocation' value="+destination[i].cityname+">");
-        document.write("<label for='departureStation'>출발역</label>");
-        document.write("<input type='text' name='departureStation' id='departureStation' value="+destination[i].stationname+">");
-        document.write("<label for='arrivalLocation'>도착지역</label>");
-        document.write("<input type='text' name='arrivalLocation' id='arrivalLocation' value="+destination[i+1].cityname+">");
-        document.write("<label for='arrivalStation'>도착역</label>");
-        document.write("<input type='text' name='arrivalStation' id='arrivalStation' value="+destination[i+1].stationname+">");
-        document.write("<label for='date'>날짜</label>");
-        document.write("<input type='date' name='date' id='date'>");
-        document.write("<button type='submit'>스케줄 확인</button>");
-        document.write("</form>");
-    }
-}
-*/
+          for(var i = 0 ; i < destination.length-1 ; i++){
+              document.write("<form action='checkSchedule' method='post' id='myForm'>");
+              document.write(" <label for='departureLocation'>출발지역</label>");
+              document.write("<input type='text' name='departureLocation' id='departureLocation' value="+destination[i].cityname+">");
+              document.write("<label for='departureStation'>출발역</label>");
+              document.write("<input type='text' name='departureStation' id='departureStation' value="+destination[i].stationname+">");
+              document.write("<label for='arrivalLocation'>도착지역</label>");
+              document.write("<input type='text' name='arrivalLocation' id='arrivalLocation' value="+destination[i+1].cityname+">");
+              document.write("<label for='arrivalStation'>도착역</label>");
+              document.write("<input type='text' name='arrivalStation' id='arrivalStation' value="+destination[i+1].stationname+">");
+              document.write("<label for='date'>날짜</label>");
+              document.write("<input type='date' name='date' id='date'>");
+              document.write("<button type='submit'>스케줄 확인</button>");
+              document.write("</form>");
+          }
+      }
+      */
       //var trainAPI = require("../backend/TrainApi.js");
       var destination = [];
       var travelRoute = [];
@@ -199,13 +247,13 @@ function makeCheckSchedule(){
         });
       }
 
-      /*    
-function checkSchedule(destination){
-    trainAPI(destination[0].cityname, destination[0].stationname,destination[1].cityname,destination[1].stationname,"20161001", "00", x=>{
-  console.log(x);
-});
-}
-*/
+      /*
+      function checkSchedule(destination){
+          trainAPI(destination[0].cityname, destination[0].stationname,destination[1].cityname,destination[1].stationname,"20161001", "00", x=>{
+        console.log(x);
+      });
+      }
+      */
       var map = new naver.maps.Map("map", {
         center: new naver.maps.LatLng(37.3700065, 127.121359),
         zoom: 4
@@ -623,19 +671,19 @@ function checkSchedule(destination){
       });
 
       /*
-naver.maps.Event.addListener(map, 'click', function(e) {
+      naver.maps.Event.addListener(map, 'click', function(e) {
 
-    var point = e.coord;
+          var point = e.coord;
 
-    var path = polyline.getPath();
-    path.push(point);
+          var path = polyline.getPath();
+          path.push(point);
 
-    new naver.maps.Marker({
-        map: map,
-        position: point
-    });
-});
-    */
+          new naver.maps.Marker({
+              map: map,
+              position: point
+          });
+      });
+          */
       //서울역 마커 및 설명
       var HOME_PATH = window.HOME_PATH || ".";
 
@@ -667,12 +715,12 @@ naver.maps.Event.addListener(map, 'click', function(e) {
         "   <h4>서울역</h4>",
         '   <input type = "button" class="btn btn-outline-primary" value = "여행지추가" onclick = "insertDestination(seoulInfo)">',
         /*
-        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-        '   </p>',
-        */
+              '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+              '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+              '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+              '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+              '   </p>',
+              */
         "</div>"
       ].join("");
 
@@ -681,12 +729,12 @@ naver.maps.Event.addListener(map, 'click', function(e) {
         "   <h4>대전역</h4>",
         '   <input type = "button" class="btn btn-outline-primary" value = "여행지추가" onclick = "insertDestination(daejeonInfo)">',
         /*
-        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-        '   </p>',
-        */
+              '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+              '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+              '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+              '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+              '   </p>',
+              */
         "</div>"
       ].join("");
 
@@ -748,12 +796,12 @@ naver.maps.Event.addListener(map, 'click', function(e) {
         "   <h4>광주역</h4>",
         '   <input type = "button" value = "여행지추가" class="btn btn-outline-primary" onclick = "insertDestination(gwangjuInfo)">',
         /*
-        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-        '   </p>',
-        */
+              '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+              '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+              '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+              '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+              '   </p>',
+              */
         "</div>"
       ].join("");
 
@@ -796,12 +844,12 @@ naver.maps.Event.addListener(map, 'click', function(e) {
         "   <h4>부산역</h4>",
         '   <input type = "button" value = "여행지추가" class="btn btn-outline-primary" onclick = "insertDestination(busanInfo)">',
         /*
-        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-        '   </p>',
-        */
+              '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+              '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+              '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+              '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+              '   </p>',
+              */
         "</div>"
       ].join("");
 
@@ -843,12 +891,12 @@ naver.maps.Event.addListener(map, 'click', function(e) {
         "   <h3>전주역</h3>",
         '   <input type = "button" value = "여행지추가" class="btn btn-outline-primary" onclick = "insertDestination(jeonjuInfo)">',
         /*
-        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-        '   </p>',
-        */
+              '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+              '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+              '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+              '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+              '   </p>',
+              */
         "</div>"
       ].join("");
 

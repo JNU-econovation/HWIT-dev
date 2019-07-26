@@ -16,6 +16,21 @@ module.exports = app => {
     });
   });
 
+  router.get("/posts", (req, res) => {
+    console.log("get('/post')실행");
+
+    postModel
+      .find({})
+      .sort("-createdAt") // 정렬방법 내림차순
+      .exec(function(err, posts) {
+        if (err) return res.json(err);
+
+        console.log(posts);
+
+        res.render("posts/index", { posts: posts });
+      });
+  });
+
   router.get("/plan", (req, res) => {
     console.log("get(/plan)요청 실행");
 
