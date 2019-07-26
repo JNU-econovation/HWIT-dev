@@ -80,7 +80,7 @@
     <br />
 
     <div id="table">
-      <form align="center" name="myform" method="post" action="/process/schedule" id="myForm">
+      <!-- <form align="center" name="myform" method="post" action="/process/schedule" id="myForm">
         <fieldset>
           <legend>첫번째 일정</legend>
           <label for="departureLocation">출발지</label>
@@ -104,13 +104,46 @@
           <input
             type="submit"
             name="subpopup"
-            value="Submit in Popup"
+            class="btn btn-success"
+            value="스케줄 확인"
             onclick="myForm.target='POPUPW'; POPUPW = window.open(
           'about:blank','POPUPW','width=1000,height=800');"
           />
           <!-- <button onClick="openPop(1);" class="btn btn-success">팝업창으로 POST 전송!!</button> -->
         </fieldset>
       </form>
+      <form align="center" name="myform1" method="post" action="/process/schedule" id="myForm1">
+        <fieldset>
+          <legend>두번째 일정</legend>
+          <label for="departureLocation">출발지</label>
+          <input type="text" name="departureLocation" id="departureLocation" value="서울특별시" />
+
+          <label for="departureStation">출발역</label>
+
+          <input type="text" name="departureStation" id="departureStation" value="서울" />
+
+          <label for="arrivalLocation">도착지</label>
+
+          <input type="text" name="arrivalLocation" id="arrivalLocation" value="대전광역시" />
+
+          <label for="arrivalStation">도착역</label>
+
+          <input type="text" name="arrivalStation" id="arrivalStation" value="대전" />
+
+          <label for="date">날짜</label>
+
+          <input type="date" name="date" id="date" />
+          <input
+            type="submit"
+            name="subpopup"
+            class="btn btn-success"
+            value="스케줄 확인"
+            onclick="myForm1.target='POPUPW'; POPUPW = window.open(
+          'about:blank','POPUPW','width=1000,height=800');"
+          />
+          <!-- <button onClick="openPop(1);" class="btn btn-success">팝업창으로 POST 전송!!</button> -->
+        </fieldset>
+      </form> -->
     </div>
 
     <script>
@@ -128,7 +161,9 @@
           var travel =
             "<form align='center' name='myform" +
             i +
-            "' method='post' action='/process/schedule' id='myForm'><fieldset><legend>" +
+            "' method='post' action='/process/schedule' id='myForm" +
+            i +
+            "'><fieldset><legend>" +
             (i + 1) +
             "번째 일정</legend><label for='departureLocation'> 출발지역 &nbsp;</label>" +
             "<input type='text' name='departureLocation' id='departureLocation' value='" +
@@ -151,7 +186,8 @@
             `<input
             type="submit"
             name="subpopup"
-            value="Submit in Popup"
+            class="btn btn-success"
+            value="스케줄 확인"
             onclick="myForm` +
             i +
             `.target='POPUPW'; POPUPW = window.open(
