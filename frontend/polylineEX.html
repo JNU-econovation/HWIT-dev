@@ -193,10 +193,12 @@
             `.target='POPUPW'; POPUPW = window.open(
           'about:blank','POPUPW','width=1000,height=800');"
           />` +
-            "</fieldset></form><br><br>"+`<button type="button" class="btn btn-primary" onclick="location.href='/myplans' ">나의 계획 확인하기</button>`;
-          var plain = document.getElementById("table");
-          plain.innerHTML = plain.innerHTML + travel;
+            "</fieldset></form><br><br>";
+          
         }
+        travel= travel + `<button type="button" align='center'class="btn btn-primary" onclick="location.href='/myplans' ">나의 계획 확인하기</button>`;
+        var plain = document.getElementById("table");
+          plain.innerHTML = plain.innerHTML + travel;
       }
 
       /*
