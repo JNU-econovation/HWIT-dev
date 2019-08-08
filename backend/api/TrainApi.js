@@ -1,7 +1,7 @@
 var axios = require("axios");
 var fs = require("fs");
 const serviceKey =
-  "jxBxcZrc8JhQ7nNGuLjCrp4EzZ81v1YTowlTLBJiZdYh23K02yVU4%2BlByJ6U7v2RKLZ9FJn%2B5ORy7R3LKb%2BC5w%3D%3D";
+  "eNBWEX%2Fy7DMugrjlxUjgi1Wf9CXloaGzrtHrVttUe97zs4tZyQjOnN8aErwJ%2FoA7USyzBZA8LpKnjaH%2Fddcb8w%3D%3D";
 
 const trainApi = async (depRegion, depStation, arrRegion, arrStation, time, trainCode) => {
   var depStationCodes = await getStationCode(getCityCode(depRegion));
